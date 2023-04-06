@@ -1,0 +1,38 @@
+https://designshack.net/articles/trends/best-website-color-schemes/
+Used 12. Ugly drinks for color
+
+https://icons8.com/
+
+Todo:
+  
+   - Add visual design elements
+   
+   
+    Potential: 
+               
+      - Do a math version that has placeable math symbols.
+      - Be able to add multiple pages
+      - Add custom background design for page.
+
+Done:   
+
+   - If you drag the mouse off canvas while the mouse is down it wont recognize mouseup
+    on return. 
+   - add different eraser sizes 
+   - on page load make sure that ranges have default values
+   - make pencil highlighted onLoad
+   - add eye dropper tool and current color menu
+      - need to add stylus pen controls for color picker
+   - add pencil icon and functionality
+   - re-style the pencil-size button and form 
+   - remove change background button
+   - add mousedown mouse up animation for buttons.(like swatches)
+   - create documentation
+   - Clean up code
+
+   Potentials Compeleted:
+      - add color brightness slider/options
+      - being able to adjust position of components. ;
+
+
+ 

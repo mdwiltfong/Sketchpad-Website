@@ -1,0 +1,166 @@
+body {
+  background-color: #00abe1;
+}
+body h1 {
+  color: white;
+  text-align: center;
+}
+body #wrapper {
+  height: 550px;
+  width: 822px;
+  margin: auto;
+  background-color: lightgrey;
+  box-shadow: -5px 5px 25px;
+}
+body #wrapper #container {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-items: center;
+  margin-top: 20px;
+}
+body #wrapper #container #container-canvas {
+  display: flex;
+  width: 760px;
+  height: 500px;
+  justify-content: center;
+  margin-top: 15px;
+}
+body #wrapper #container #container-canvas #canva {
+  position: relative;
+  left: 30px;
+  background-color: white;
+}
+body #wrapper #container #container-canvas #color-picker-menu {
+  position: relative;
+  bottom: 15px;
+  right: 730px;
+  width: 80px;
+  height: 200px;
+  border: 2px black;
+}
+body #wrapper #container #container-canvas #color-picker-menu #swatch-1 {
+  height: 40px;
+  width: 40px;
+  background-color: hsl(0deg, 100%, 0%);
+  margin-top: 10px;
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+body #wrapper #container #container-canvas #color-picker-menu #swatch-2 {
+  height: 40px;
+  width: 40px;
+  background-color: hsl(0deg, 100%, 100%);
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+body #wrapper #container #container-canvas #color-picker-menu #swatch-3 {
+  height: 40px;
+  width: 40px;
+  background-color: hsl(0deg, 100%, 50%);
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+body #wrapper #container #container-canvas #color-picker-menu #swatch-4 {
+  height: 40px;
+  width: 40px;
+  background-color: hsl(240deg, 100%, 50%);
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+body #wrapper #container #container-canvas #color-picker-menu #swatch-5 {
+  height: 40px;
+  width: 40px;
+  background-color: hsl(120deg, 100%, 50%);
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+body #wrapper #container #container-canvas #color-picker-menu #swatch-6 {
+  height: 40px;
+  width: 40px;
+  background-color: hsl(39deg, 100%, 50%);
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+body #wrapper #container #container-canvas #color-picker-menu #swatch-7 {
+  height: 40px;
+  width: 40px;
+  background-color: hsl(60deg, 100%, 50%);
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+body #wrapper #container #container-canvas #color-picker-menu #swatch-8 {
+  height: 40px;
+  width: 40px;
+  background-color: hsl(353deg, 97%, 62%);
+  margin-bottom: 5px;
+  margin-left: 10px;
+}
+body #wrapper #container #container-canvas #color-picker-menu .swatch-btn {
+  background-color: transparent;
+  color: transparent;
+  width: 100%;
+  height: 100%;
+}
+body #wrapper #container #container-canvas #color-picker-menu #slide-form {
+  text-align: center;
+}
+body #wrapper #container #container-canvas #color-picker-menu label {
+  font-size: 14px;
+  text-align: center;
+}
+body #wrapper #container #container-canvas #color-picker-menu .range {
+  width: 50px;
+  margin-left: 5px;
+}
+body #wrapper #container #container-canvas #color-picker-menu #eyedropper {
+  height: 20px;
+  width: 20px;
+  margin-bottom: 5px;
+  margin-left: 11px;
+}
+body #wrapper #container #container-canvas #color-picker-menu #currentcolor {
+  height: 35px;
+  width: 35px;
+  border: 1px solid black;
+  margin-top: 15px;
+  margin-bottom: 5px;
+  margin-left: 12px;
+}
+body #wrapper #container #toolbar {
+  position: relative;
+  display: flex;
+  height: 2rem;
+  width: 699px;
+  justify-content: center;
+}
+body #wrapper #container #toolbar label {
+  color: rgb(0, 0, 0);
+}
+body #wrapper #container #toolbar .icon {
+  display: flex;
+  align-items: center;
+  width: 40px;
+  border: none;
+  background: transparent;
+}
+body #wrapper #container #toolbar .icon-img {
+  border: 1px solid black;
+  box-shadow: -1px 1px;
+}
+body #wrapper #container #toolbar .icon-img:active {
+  width: 20px;
+  height: 20px;
+}
+body #wrapper #container #toolbar #stroke-value {
+  width: 80px;
+}
+body #wrapper #container #toolbar #brush-size {
+  width: 40px;
+  height: 2rem;
+}
+body #wrapper #container #toolbar form {
+  margin-right: 10px;
+}
+
+/*# sourceMappingURL=style.css.map */

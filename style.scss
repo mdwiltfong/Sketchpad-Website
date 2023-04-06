@@ -1,0 +1,208 @@
+
+body{
+    background-color:#00abe1;
+
+    h1{
+    color: white;
+    text-align: center;
+    }
+
+    #wrapper{
+
+        height: 550px;
+        width: 822px;
+        margin: auto;
+        background-color: lightgrey;
+        box-shadow: -5px 5px 25px ;
+
+        #container{
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-items: center;
+        margin-top: 20px;
+
+        #container-canvas{
+        display:flex;
+        width: 760px;
+        height: 500px;
+        justify-content: center;
+        margin-top: 15px;
+
+        #canva{
+            position: relative;
+            left: 30px;
+            background-color: white;
+        }
+
+
+        #color-picker-menu {
+            position: relative;
+            bottom: 15px;
+            right: 730px;
+            width: 80px;
+            height: 200px;
+            border: 2px black;
+
+            #swatch-1{
+                height: 40px;
+                width: 40px;
+                background-color: hsl(0, 100%, 0%);
+                margin-top: 10px;
+                margin-bottom: 5px;
+                margin-left: 10px;
+            }
+
+            #swatch-2{
+                height: 40px;
+                width: 40px;
+                background-color: hsl(0, 100%, 100%);
+                margin-bottom: 5px;
+                margin-left: 10px;
+            }
+
+            #swatch-3{
+                height: 40px;
+                width: 40px;
+                background-color: hsl(0, 100%, 50%);
+                margin-bottom: 5px;
+                margin-left: 10px;
+            }
+
+            #swatch-4{
+                height: 40px;
+                width: 40px;
+                background-color: hsl(240, 100%, 50%);
+                margin-bottom: 5px;
+                margin-left: 10px;
+            }
+            
+            #swatch-5{
+                height: 40px;
+                width: 40px;
+                background-color: hsl(120, 100%, 50%);
+                margin-bottom: 5px;
+                margin-left: 10px;
+            }
+            #swatch-6{
+                height: 40px;
+                width: 40px;
+                background-color: hsl(39, 100%, 50%);
+                margin-bottom: 5px;
+                margin-left: 10px;
+            }
+            
+            #swatch-7{
+                height: 40px;
+                width: 40px;
+                background-color: hsl(60, 100%, 50%);
+                margin-bottom: 5px;
+                margin-left: 10px;
+            }
+
+            #swatch-8{
+                height: 40px;
+                width: 40px;
+                background-color: hsl(353, 97%, 62%);
+                margin-bottom: 5px;
+                margin-left: 10px;
+            }
+            
+            .swatch-btn{
+                background-color: transparent;
+                color: transparent;
+                width: 100%;
+                height: 100%;
+            
+            }
+
+            #slide-form{
+                text-align: center;
+            }
+
+            label {
+                font-size: 14px;
+                text-align: center;
+            }
+
+            .range {
+                width: 50px;
+                margin-left: 5px;
+            }
+
+            #eyedropper{
+                height: 20px;
+                width: 20px;
+                margin-bottom: 5px;
+                margin-left: 11px;
+            }
+            
+            #currentcolor{
+                height: 35px;
+                width: 35px;
+                border: 1px solid black;
+                margin-top: 15px;
+                margin-bottom: 5px;
+                margin-left: 12px;
+            }
+        }
+
+        
+    }
+        #toolbar {
+            position: relative;
+            display: flex;
+            height: 2rem;
+            width: 699px; 
+            justify-content: center;
+            
+            label{
+                color: rgb(0, 0, 0);
+            }
+
+            .icon{
+                display: flex;
+                align-items: center;
+                width: 40px;
+                border: none;
+                background: transparent;  
+            }
+
+            .icon-img{
+                border: 1px solid black;
+                box-shadow: -1px 1px;
+            }
+        
+            .icon-img:active{
+                width: 20px;
+                height: 20px;
+            }
+
+
+            #stroke-value{
+                width: 80px;
+            }
+
+            #brush-size{
+                width: 40px;
+                height: 2rem;
+            }
+
+            form{
+                margin-right: 10px;
+            }
+        }
+    }
+
+    }
+
+}
+
+
+
+
+
+
+
+
+
