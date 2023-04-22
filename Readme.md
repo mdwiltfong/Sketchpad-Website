@@ -5,8 +5,7 @@
 
 ## Description: 
 
-Very basic drawing pad app where you can draw whatever you like and
-save your work locally to your hardrive. 
+Basic drawing pad app where you can draw whatever you like and save your work locally to your hard drive. 
 
 When the page is loaded the pencil tool will be automatically selected. The default color is black but You can pick a color from the palette on the left as well as adjust the amount of lightness and saturation you would like for each color. The current color box at the bottom left will change color based on what you select.
 
