@@ -1,6 +1,11 @@
-Drawing Pad website
+## Drawing Pad website
 
-Description: Very basic drawing pad app where you can draw whatever you like and
+## [Case Study](https://github.com/Th0ughtTrain/Sketchpad-Website/tree/main/Case%20Study/DrawingPadCaseStudy.md)
+<br>
+
+## Description: 
+
+Very basic drawing pad app where you can draw whatever you like and
 save your work locally to your hardrive. 
 
 When the page is loaded the pencil tool will be automatically selected. The default color is black but You can pick a color from the palette on the left as well as adjust the amount of lightness and saturation you would like for each color. The current color box at the bottom left will change color based on what you select.
@@ -13,3 +18,7 @@ Eyedropper tool: By clicking the eyedropper button under the palette you can pic
 Clear Canvas: Does just that clear the entire canvas.
 
 Save: Allows you to save the drawing to your hard drive. 
+
+
+
+

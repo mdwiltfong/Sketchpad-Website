@@ -154,7 +154,9 @@ document.getElementById('save').addEventListener('click', function(e) {
   createEl.href = canvasUrl;
   createEl.download = "Notepad";
   createEl.click();
+  setTimeout(createEl.disabled = "true", 2)
   createEl.remove();
+ 
 });
 
 
