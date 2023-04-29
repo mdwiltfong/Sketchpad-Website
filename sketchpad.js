@@ -13,10 +13,22 @@ document.body.onload = () => {
 
 
 
+
 //section: NOTEPAD CODE
 
 let canvas = document.getElementById("canva");
 let ctx = canvas.getContext('2d');
+// let isDialogueOpen = false;
+
+// window.addEventListener('focus', () => {
+//     if (isDialogueOpen) {
+//       isDialogueOpen=false
+//       document.getElementsByClassName
+//       console.debug("Is Dialogue Open?")
+//       console.debug(isDialogueOpen)
+//       document.getElementById('save').disabled = false;
+//     }
+// })
 
 
 
@@ -147,16 +159,54 @@ clearButton.addEventListener("click", clearFunc);
 
 //section Save to Computer// looked this one up. 
 
-document.getElementById('save').addEventListener('click', function(e) {
-  let canvasUrl = canvas.toDataURL("image/jpeg", 0.5);
-  console.log(canvasUrl);
-  const createEl = document.createElement('a');
-  createEl.href = canvasUrl;
-  createEl.download = "Notepad";
-  createEl.click();
-  setTimeout(createEl.disabled = "true", 2)
-  createEl.remove();
+// document.getElementById('save').addEventListener('click', function(e) {
+//   isDialogueOpen = true;
+//   document.getElementById('save').disabled = true;
+//   let canvasUrl = canvas.toDataURL("image/jpeg", 0.5);
+//   //console.log(canvasUrl);
+//   const createEl = document.createElement('a');
+//   createEl.href = canvasUrl;
+//   createEl.download = "Notepad";
+//   if(isDialogueOpen==true){
+//     createEl.click();
+//   }
+  
+//   //setTimeout(createEl.disabled = "true", 2)
+//   createEl.remove();
  
+// });
+
+
+const saveBtn = document.querySelector('#save');
+
+saveBtn.addEventListener('click', async () => {
+  // saveBtn.disabled = true;
+  // const canvasUrl = canvas.toDataURL('image/png');
+  // const downloadLink = document.createElement('a');
+  // downloadLink.href = canvasUrl;
+  // downloadLink.download = 'myDrawing.png';
+  
+  // downloadLink.onload = function() {
+  //   // re-enable the save button after the download link is clicked
+  //   saveBtn.disabled = false;
+  //   // cleanup the download link
+  //   downloadLink.parentNode.removeChild(downloadLink);
+  // };
+  
+  // document.body.appendChild(downloadLink);
+  // downloadLink.click();
+ 
+    const opts = {
+      types: [
+        {
+          description: "Text file",
+          accept: { "text/plain": [".txt"] },
+        },
+      ],
+    };
+    return await window.showSaveFilePicker(opts);
+  
+  
 });
 
 
