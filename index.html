@@ -1,81 +1,92 @@
 <!DOCTYPE html>
 <html>
-    <head>
-        <meta charset="utf-8">
-        <meta http-equiv="X-UA-Compatible" content="IE=edge">
-        <title>Drawing Pad</title>
-        <meta name="description" content="">
-        <meta name="viewport" content="width=device-width, initial-scale=1">
-        <link rel="stylesheet" href="style.css">
-    </head>
-    <body>
-        <h1>Drawing Pad</h1>
-        <div id="wrapper">
-            <div id="container" display="flex">
-                <div id="container-canvas">
-                    <canvas id="canva" height="500" width="700" style="border: 1px solid black"></canvas>
-                    <div id="color-picker-menu">
-                        <div id="swatch-1">
-                            <button class="swatch-btn" type="button" value="Black">Black</button>
-                        </div>
-                        <div id="swatch-2">
-                            <button class="swatch-btn" type="button" value="White">White</button>
-                        </div>
-                        <div id="swatch-3">
-                            <button class="swatch-btn" type="button" value=" hsl(0, 100%, 50%)">Red</button>
-                        </div>
-                        <div id="swatch-4">
-                            <button class="swatch-btn" type="button" value="hsl(240, 100%, 50%">Blue</button>
-                        </div>
-                        <div id="swatch-5">
-                            <button class="swatch-btn" type="button" value="hsl(120, 100%, 50%)">Green</button>
-                        </div>
-                        <div id="swatch-6">
-                            <button class="swatch-btn" type="button" value="hsl(39, 100%, 50%)">Orange</button>
-                        </div>
-                        <div id="swatch-7">
-                            <button class="swatch-btn" type="button" value="hsl(60, 100%, 50%)">Yellow</button>
-                        </div>
-                        <div id="swatch-8">
-                            <button class="swatch-btn" type="button" value="hsl(353, 97%, 62%)">Pink</button>
-                        </div>
-                        <form id="slide-form">
-                        <label for="lightness">Light</label>
-                            <input id="lightness" class="range" type="range">
-                            <label for="saturation"  >Saturation</label>
-                            <input id="saturation"  class="range" type="range">
-                        </form>
-                        <div id="eyedropper">
-                            <button id="eye-btn" class="icon"><svg xmlns="http://www.w3.org/2000/svg" id="eyedrop-icon" class="icon-img" width="28" height="28" fill="currentColor" class="bi bi-eyedropper" viewBox="0 0 16 16">
-                                <path d="M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.707L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708l-2-2zM2 12.707l7-7L10.293 7l-7 7H2v-1.293z"/>
-                              </svg></button>
-                        </div>
-                        <div id="currentcolor"></div>
+
+<head>
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <title>Drawing Pad</title>
+    <meta name="description" content="">
+    <meta name="viewport" content="width=device-width, initial-scale=1">
+    <link rel="stylesheet" href="style.css">
+</head>
+
+<body>
+    <h1>Drawing Pad</h1>
+    <div id="wrapper">
+        <div id="container" display="flex">
+            <div id="container-canvas">
+                <canvas id="canva" height="500" width="700" style="border: 1px solid black"></canvas>
+                <div id="color-picker-menu">
+                    <div id="swatch-1">
+                        <button class="swatch-btn" type="button" value="Black">Black</button>
                     </div>
-                </div> 
-                <div id="toolbar">
-                    <button class="icon" id="eraser"><svg class = "icon-img" id="erase-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-eraser-fill" viewBox="0 0 16 16">
-                        <path d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z"/>
-                        </svg></button>
-                    <form id="eraser-settings">
-                        <label for="eraser-value">Eraser Size</label>
-                        <input type="range"  id="eraser-value">
+                    <div id="swatch-2">
+                        <button class="swatch-btn" type="button" value="White">White</button>
+                    </div>
+                    <div id="swatch-3">
+                        <button class="swatch-btn" type="button" value=" hsl(0, 100%, 50%)">Red</button>
+                    </div>
+                    <div id="swatch-4">
+                        <button class="swatch-btn" type="button" value="hsl(240, 100%, 50%">Blue</button>
+                    </div>
+                    <div id="swatch-5">
+                        <button class="swatch-btn" type="button" value="hsl(120, 100%, 50%)">Green</button>
+                    </div>
+                    <div id="swatch-6">
+                        <button class="swatch-btn" type="button" value="hsl(39, 100%, 50%)">Orange</button>
+                    </div>
+                    <div id="swatch-7">
+                        <button class="swatch-btn" type="button" value="hsl(60, 100%, 50%)">Yellow</button>
+                    </div>
+                    <div id="swatch-8">
+                        <button class="swatch-btn" type="button" value="hsl(353, 97%, 62%)">Pink</button>
+                    </div>
+                    <form id="slide-form">
+                        <label for="lightness">Light</label>
+                        <input id="lightness" class="range" type="range">
+                        <label for="saturation">Saturation</label>
+                        <input id="saturation" class="range" type="range">
                     </form>
-                    <button class="icon" id="pencil"><svg class="icon-img" id="pencil-icon" xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor" class="bi bi-pencil" viewBox="0 0 16 16">
-                        <path d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z"/>
-                    </svg></button>
-                    <form id="brush-settings">
-                        <label for="stroke-value">Stroke Size</label>
-                        <input type="text" placeholder="1-50" id="stroke-value">
-                        <input id="brush-size" type="button" value="OK"></input>
-                    </form>
-                    <button id="clear" type="button">Clear Canvas</button>
-                    <button id="save">Save</button>
-                    <a class="dlink" href="" download="Notepad"></a>
+                    <div id="eyedropper">
+                        <button id="eye-btn" class="icon"><svg xmlns="http://www.w3.org/2000/svg" id="eyedrop-icon"
+                                class="icon-img" width="28" height="28" fill="currentColor" class="bi bi-eyedropper"
+                                viewBox="0 0 16 16">
+                                <path
+                                    d="M13.354.646a1.207 1.207 0 0 0-1.708 0L8.5 3.793l-.646-.647a.5.5 0 1 0-.708.708L8.293 5l-7.147 7.146A.5.5 0 0 0 1 12.5v1.793l-.854.853a.5.5 0 1 0 .708.707L1.707 15H3.5a.5.5 0 0 0 .354-.146L11 7.707l1.146 1.147a.5.5 0 0 0 .708-.708l-.647-.646 3.147-3.146a1.207 1.207 0 0 0 0-1.708l-2-2zM2 12.707l7-7L10.293 7l-7 7H2v-1.293z" />
+                            </svg></button>
+                    </div>
+                    <div id="currentcolor"></div>
                 </div>
             </div>
-        </div>    
-        <script src="sketchpad.js" async defer></script>
-    </body>
-</html>
+            <div id="toolbar">
+                <button class="icon" id="eraser"><svg class="icon-img" id="erase-icon"
+                        xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                        class="bi bi-eraser-fill" viewBox="0 0 16 16">
+                        <path
+                            d="M8.086 2.207a2 2 0 0 1 2.828 0l3.879 3.879a2 2 0 0 1 0 2.828l-5.5 5.5A2 2 0 0 1 7.879 15H5.12a2 2 0 0 1-1.414-.586l-2.5-2.5a2 2 0 0 1 0-2.828l6.879-6.879zm.66 11.34L3.453 8.254 1.914 9.793a1 1 0 0 0 0 1.414l2.5 2.5a1 1 0 0 0 .707.293H7.88a1 1 0 0 0 .707-.293l.16-.16z" />
+                    </svg></button>
+                <form id="eraser-settings">
+                    <label for="eraser-value">Eraser Size</label>
+                    <input type="range" id="eraser-value">
+                </form>
+                <button class="icon" id="pencil"><svg class="icon-img" id="pencil-icon"
+                        xmlns="http://www.w3.org/2000/svg" width="28" height="28" fill="currentColor"
+                        class="bi bi-pencil" viewBox="0 0 16 16">
+                        <path
+                            d="M12.146.146a.5.5 0 0 1 .708 0l3 3a.5.5 0 0 1 0 .708l-10 10a.5.5 0 0 1-.168.11l-5 2a.5.5 0 0 1-.65-.65l2-5a.5.5 0 0 1 .11-.168l10-10zM11.207 2.5 13.5 4.793 14.793 3.5 12.5 1.207 11.207 2.5zm1.586 3L10.5 3.207 4 9.707V10h.5a.5.5 0 0 1 .5.5v.5h.5a.5.5 0 0 1 .5.5v.5h.293l6.5-6.5zm-9.761 5.175-.106.106-1.528 3.821 3.821-1.528.106-.106A.5.5 0 0 1 5 12.5V12h-.5a.5.5 0 0 1-.5-.5V11h-.5a.5.5 0 0 1-.468-.325z" />
+                    </svg></button>
+                <form id="brush-settings">
+                    <label for="stroke-value">Stroke Size</label>
+                    <input type="text" placeholder="1-50" id="stroke-value">
+                    <input id="brush-size" type="button" value="OK"></input>
+                </form>
+                <button id="clear" type="button">Clear Canvas</button>
+                <button id="save">Save</button>
+                <a class="dlink" href="" download="Notepad"></a>
+            </div>
+        </div>
+    </div>
+    <script src="./dist/app.js" async defer></script>
+</body>
 
+</html>
