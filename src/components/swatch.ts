@@ -1,21 +1,45 @@
+import Component, { insertAt } from "./BaseComponent";
+import SketchPad from "./sketchPad";
+
 export enum Color {
   red = "hsl(0,100%,50%)",
-  white = "h(0,0,100%)",
-  black = "hsl(0,0,0%)",
+  white = "hsl(0,100%,100%)",
+  black = "hsl(0,100%,0%)",
   blue = "hsl(240,100%,50%)",
   green = "hsl(120,100%,50%)",
   orange = "hsl(30,100%,50%)",
   pink = "hsl(330,100%,50%)",
 }
 
-export default class Swatch {
-  private element: HTMLDivElement;
-  private swatch: HTMLButtonElement;
+export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
+  private swatchDiv: HTMLDivElement;
   private color: string;
   private innerText: string;
   constructor(color: Color) {
+    super("color-picker-menu", insertAt.beforeend);
     this.color = color;
+    this.configure();
+  }
+
+  public configure() {
     this.configureInnerText();
+    this.swatchDiv = this.createSwatchElement();
+    this.renderContent();
+  }
+  public renderContent() {
+    this.hostElement.appendChild(this.swatchDiv);
+  }
+  private createSwatchElement(): HTMLDivElement {
+    const swatchDiv = document.createElement("div");
+    swatchDiv.className = `swatch`;
+    swatchDiv.setAttribute("style", `background-color:${this.color}`);
+    const swatch = document.createElement("button");
+    swatch.className = "swatch-btn";
+    swatch.type = "button";
+    swatch.value = this.color;
+    swatch.innerText = this.innerText;
+    swatchDiv.appendChild(swatch);
+    return swatchDiv;
   }
   private configureInnerText() {
     switch (this.color) {

@@ -1,3 +1,10 @@
 import SketchPad from "./components/sketchPad";
-
-new SketchPad();
+import Swatch from "./components/swatch";
+import { Color } from "./components/swatch";
+new Swatch(Color.red);
+new Swatch(Color.white);
+new Swatch(Color.black);
+new Swatch(Color.blue);
+new Swatch(Color.green);
+new Swatch(Color.orange);
+new Swatch(Color.pink);

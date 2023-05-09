@@ -39,63 +39,14 @@ body #wrapper #container #container-canvas #color-picker-menu {
   height: 200px;
   border: 2px black;
 }
-body #wrapper #container #container-canvas #color-picker-menu #swatch-1 {
+body #wrapper #container #container-canvas #color-picker-menu .swatch {
   height: 40px;
   width: 40px;
-  background-color: hsl(0deg, 100%, 0%);
   margin-top: 10px;
   margin-bottom: 5px;
   margin-left: 10px;
 }
-body #wrapper #container #container-canvas #color-picker-menu #swatch-2 {
-  height: 40px;
-  width: 40px;
-  background-color: hsl(0deg, 100%, 100%);
-  margin-bottom: 5px;
-  margin-left: 10px;
-}
-body #wrapper #container #container-canvas #color-picker-menu #swatch-3 {
-  height: 40px;
-  width: 40px;
-  background-color: hsl(0deg, 100%, 50%);
-  margin-bottom: 5px;
-  margin-left: 10px;
-}
-body #wrapper #container #container-canvas #color-picker-menu #swatch-4 {
-  height: 40px;
-  width: 40px;
-  background-color: hsl(240deg, 100%, 50%);
-  margin-bottom: 5px;
-  margin-left: 10px;
-}
-body #wrapper #container #container-canvas #color-picker-menu #swatch-5 {
-  height: 40px;
-  width: 40px;
-  background-color: hsl(120deg, 100%, 50%);
-  margin-bottom: 5px;
-  margin-left: 10px;
-}
-body #wrapper #container #container-canvas #color-picker-menu #swatch-6 {
-  height: 40px;
-  width: 40px;
-  background-color: hsl(39deg, 100%, 50%);
-  margin-bottom: 5px;
-  margin-left: 10px;
-}
-body #wrapper #container #container-canvas #color-picker-menu #swatch-7 {
-  height: 40px;
-  width: 40px;
-  background-color: hsl(60deg, 100%, 50%);
-  margin-bottom: 5px;
-  margin-left: 10px;
-}
-body #wrapper #container #container-canvas #color-picker-menu #swatch-8 {
-  height: 40px;
-  width: 40px;
-  background-color: hsl(353deg, 97%, 62%);
-  margin-bottom: 5px;
-  margin-left: 10px;
-}
+
 body #wrapper #container #container-canvas #color-picker-menu .swatch-btn {
   background-color: transparent;
   color: transparent;

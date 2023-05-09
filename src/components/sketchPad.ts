@@ -1,22 +1,30 @@
-export default class SketchPad {
-  private hostElement: HTMLDivElement;
+import Component from "./BaseComponent";
+import { insertAt } from "./BaseComponent";
+export default class SketchPad extends Component<
+  HTMLDivElement,
+  HTMLDivElement
+> {
   private canvasElement: HTMLCanvasElement;
+  private canvasHeight = 500;
+  private canvasWidth = 700;
+  private canvasBorder = "1px solid black";
   constructor() {
+    super("container", insertAt.afterbegin);
     this.configure();
-    this.render();
+    this.renderContent();
   }
 
-  private configure() {
+  public configure() {
     this.hostElement = document.getElementById(
       "container-canvas"
     ) as HTMLDivElement;
     this.canvasElement = document.createElement("canvas");
     this.canvasElement.id = "canva";
-    this.canvasElement.width = 700;
-    this.canvasElement.height = 500;
-    this.canvasElement.style.border = "1px solid black";
+    this.canvasElement.width = this.canvasWidth;
+    this.canvasElement.height = this.canvasHeight;
+    this.canvasElement.style.border = this.canvasBorder;
   }
-  private render() {
+  public renderContent() {
     this.hostElement.appendChild(this.canvasElement);
   }
 }
