@@ -1,19 +1,22 @@
-export default class SlideForm {
-  private hostELement: HTMLDivElement;
-  private formElement: HTMLFormElement;
+import Component, { insertAt } from "./BaseComponent";
+
+export default class SlideForm extends Component<
+  HTMLDivElement,
+  HTMLFormElement
+> {
   constructor() {
+    super(
+      "color-picker-menu",
+      insertAt.beforeend,
+      undefined,
+      "form",
+      "slide-form"
+    );
     this.configure();
-    this.render();
+    this.renderContent();
   }
-  private configure() {
-    this.hostELement = document.getElementById(
-      "color-picker-menu"
-    )! as HTMLDivElement;
-    this.formElement = document.createElement("form")! as HTMLFormElement;
-    this.configureForm();
-  }
-  private configureForm() {
-    this.formElement.id = "slide-form";
+
+  public configure() {
     // Lightness slider
     const lightLabel = document.createElement("label");
     lightLabel.setAttribute("for", "lightness");
@@ -31,13 +34,11 @@ export default class SlideForm {
     saturationInput.id = "saturation";
     saturationInput.className = "range";
 
-    this.formElement.appendChild(lightLabel);
-    this.formElement.appendChild(lightInput);
-    this.formElement.appendChild(saturationLabel);
-    this.formElement.appendChild(saturationInput);
-    return this.formElement;
+    this.element.appendChild(lightLabel);
+    this.element.appendChild(lightInput);
+    this.element.appendChild(saturationLabel);
+    this.element.appendChild(saturationInput);
+    return this.element;
   }
-  private render() {
-    this.hostELement.appendChild(this.formElement);
-  }
+  public renderContent() {}
 }

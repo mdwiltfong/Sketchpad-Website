@@ -8,18 +8,27 @@ export default abstract class Component<
   U extends HTMLElement | HTMLFormElement | HTMLDivElement
 > {
   protected hostElement: T;
-  private element: U;
+  protected element: U;
 
   constructor(
     hostElementId: string,
     insertAtStart: insertAt,
+    elementId?: string,
+    element?: string,
     newElementId?: string
   ) {
     this.hostElement = document.getElementById(hostElementId)! as T;
-    if (newElementId) {
-      this.element = document.getElementById(newElementId)! as U;
-      this.hostElement.insertAdjacentElement(insertAtStart, this.element);
+    if (newElementId && element) {
+      this.element = document.createElement(element)! as U;
+      this.element.setAttribute("class", newElementId);
     }
+    if (elementId) {
+      this.element = document.getElementById(elementId)! as U;
+    }
+    this.attach(insertAtStart);
+  }
+  private attach(insertAtStart: insertAt) {
+    this.hostElement.insertAdjacentElement(insertAtStart, this.element);
   }
 
   abstract configure(): void;

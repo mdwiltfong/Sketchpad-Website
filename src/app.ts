@@ -1,3 +1,5 @@
+import EyeDropper from "./components/EyeDropper";
+import SlideForm from "./components/SlideForm";
 import SketchPad from "./components/sketchPad";
 import Swatch from "./components/swatch";
 import { Color } from "./components/swatch";
@@ -8,3 +10,5 @@ new Swatch(Color.blue);
 new Swatch(Color.green);
 new Swatch(Color.orange);
 new Swatch(Color.pink);
+new SlideForm();
+new EyeDropper();
