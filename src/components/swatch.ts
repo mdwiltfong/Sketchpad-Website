@@ -16,7 +16,7 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
   private color: string;
   private innerText: string;
   constructor(color: Color) {
-    super("color-picker-menu", insertAt.beforeend, undefined, "div", "swatch");
+    super("color-picker-menu", insertAt.beforeend, "div");
     this.color = color;
     this.configure();
   }
@@ -31,6 +31,7 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
   }
   private createSwatchElement(): HTMLDivElement {
     this.element.setAttribute("style", `background-color:${this.color}`);
+    this.element.setAttribute("class", "swatch");
     const swatch = document.createElement("button");
     swatch.className = "swatch-btn";
     swatch.type = "button";

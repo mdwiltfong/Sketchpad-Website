@@ -9,7 +9,7 @@ export default class SketchPad extends Component<
   private canvasWidth = 700;
   private canvasBorder = "1px solid black";
   constructor() {
-    super("container", insertAt.afterbegin);
+    super("container", insertAt.afterbegin, "div");
     this.configure();
     this.renderContent();
   }

@@ -9,6 +9,7 @@ module.exports = {
         directory: path.join(__dirname),
       },
     ],
+    port: 9000,
   },
   output: {
     filename: "bundle.js",

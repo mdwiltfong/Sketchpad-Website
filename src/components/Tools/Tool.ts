@@ -10,14 +10,18 @@ export default abstract class Tool extends Component<
   constructor(
     hostElementId: string,
     private toolId: string,
-    private pathD: string
+    private pathD: string,
+    private elementTag: string,
+    private elementClass?: string,
+    private elementId?: string
   ) {
-    super(hostElementId, insertAt.beforeend, undefined, "div", toolId);
+    super(hostElementId, insertAt.afterbegin, elementTag);
     this.configure();
     this.renderContent();
   }
   public configure(): void {
-    this.btn = document.createElement("button");
+    this.element.setAttribute("class", "icon");
+    this.element.setAttribute("id", `${this.toolId}`);
     this.svg = document.createElementNS("http://www.w3.org/2000/svg", "svg");
     this.pathTag = document.createElementNS(
       "http://www.w3.org/2000/svg",
@@ -33,13 +37,13 @@ export default abstract class Tool extends Component<
     this.svg.setAttribute("height", "28");
     this.svg.setAttribute("viewBox", "0 0 16 16");
     this.svg.setAttribute("fill", "currentColor");
-    this.btn.insertAdjacentElement(insertAt.afterbegin, this.svg);
+    this.element.insertAdjacentElement(insertAt.afterbegin, this.svg);
   }
   private configurePath() {
     this.pathTag.setAttribute("d", this.pathD);
     this.svg.insertAdjacentElement(insertAt.beforeend, this.pathTag);
   }
   public renderContent(): void {
-    this.element.insertAdjacentElement(insertAt.afterbegin, this.btn);
+    this.hostElement.insertAdjacentElement(insertAt.afterbegin, this.element);
   }
 }

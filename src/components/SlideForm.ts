@@ -5,13 +5,7 @@ export default class SlideForm extends Component<
   HTMLFormElement
 > {
   constructor() {
-    super(
-      "color-picker-menu",
-      insertAt.beforeend,
-      undefined,
-      "form",
-      "slide-form"
-    );
+    super("color-picker-menu", insertAt.beforeend, "form");
     this.configure();
     this.renderContent();
   }
@@ -38,6 +32,7 @@ export default class SlideForm extends Component<
     this.element.appendChild(lightInput);
     this.element.appendChild(saturationLabel);
     this.element.appendChild(saturationInput);
+    this.element.id = "slide-form";
     return this.element;
   }
   public renderContent() {}

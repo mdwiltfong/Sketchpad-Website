@@ -13,18 +13,10 @@ export default abstract class Component<
   constructor(
     hostElementId: string,
     insertAtStart: insertAt,
-    elementId?: string,
-    element?: string,
-    newElementId?: string
+    elementTag: string
   ) {
     this.hostElement = document.getElementById(hostElementId)! as T;
-    if (newElementId && element) {
-      this.element = document.createElement(element)! as U;
-      this.element.setAttribute("class", newElementId);
-    }
-    if (elementId) {
-      this.element = document.getElementById(elementId)! as U;
-    }
+    this.element = document.createElement(elementTag) as U;
     this.attach(insertAtStart);
   }
   private attach(insertAtStart: insertAt) {
