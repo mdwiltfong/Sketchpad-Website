@@ -20,7 +20,7 @@ export default class Eraser extends Tool {
 
     formElement.insertAdjacentElement(insertAt.afterbegin, label);
     formElement.insertAdjacentElement(insertAt.beforeend, rangeInput);
-
     // add element to button
+    this.element.insertAdjacentElement(insertAt.afterend, formElement);
   }
 }

@@ -1,6 +1,7 @@
 export enum insertAt {
   afterbegin = "afterbegin",
   beforeend = "beforeend",
+  afterend = "afterend",
 }
 
 export default abstract class Component<
