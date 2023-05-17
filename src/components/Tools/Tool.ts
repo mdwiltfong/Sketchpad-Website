@@ -45,4 +45,8 @@ export default abstract class Tool extends Component<
   public renderContent(): void {
     this.hostElement.insertAdjacentElement(insertAt.afterbegin, this.element);
   }
+  abstract startTool(pointerEvent: PointerEvent): void;
+  abstract implementTool(eventObject: Event): void;
+  abstract stopTool(eventObject: Event): void;
+  abstract activateTool(eventObject: Event): void;
 }
