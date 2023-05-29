@@ -1,6 +1,6 @@
 import Tool from "./Tool";
 import { insertAt } from "../BaseComponent";
-import bind from "../../utils/utils";
+import { bind, projectState } from "../../utils/utils";
 export default class Pencil extends Tool {
   private isActive: boolean = false;
   constructor(pathId: string) {

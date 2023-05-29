@@ -1,6 +1,6 @@
 import Tool from "../components/Tools/Tool";
 
-export default function bind(
+export function bind(
   target: Object,
   methodName: string,
   descriptor: PropertyDescriptor
@@ -26,11 +26,42 @@ class State<T> {
 export class ProjectState extends State<Tool> {
   private tools: Tool[] = [];
   private static instance: ProjectState;
-  private constructor(...tools: Tool[]) {
-    super();
-    this.tools = tools;
-  }
+  // Default values for the sliders
+  private lightSliderValue: Number = 50;
+  private satSliderValue: Number = 100;
 
+  // Pencil State
+  private pencil: Boolean = true;
+  private drawing: Boolean = false;
+  private strokeValue: Number = 1;
+  private pencilIconBackground: String = "white";
+  // Eraser status
+  private eraser: Boolean = false;
+  private erasing: Boolean = false;
+  private eraserValue: Number = 25;
+  // Eye Dropper State
+  private eyeDropper: Boolean = false;
+  private pickingColor: Boolean = false;
+
+  private constructor() {
+    super();
+  }
+  public getState() {
+    return {
+      lightSliderValue: this.lightSliderValue,
+      satSliderValue: this.satSliderValue,
+      pencil: this.pencil,
+      drawing: this.drawing,
+      strokeValue: this.strokeValue,
+      pencilIconBackground: this.pencilIconBackground,
+      eraser: this.eraser,
+      erasing: this.erasing,
+      eraserValue: this.eraserValue,
+      eyeDropper: this.eyeDropper,
+      pickingColor: this.pickingColor,
+    };
+  }
+  public setState(newState: any): void {}
   updateListeners() {
     for (const listenerFn of this.listeners) {
       // We use `.slice()` here because we want to make a copy of the array of listeners, not the original one.
