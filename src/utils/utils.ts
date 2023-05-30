@@ -46,10 +46,10 @@ type eyeDropperState = {
 };
 
 type stateType = {
-  readonly sliderState: sliderState;
-  readonly pencilState: pencilState;
-  readonly eraserState: eraserState;
-  readonly eyeDropperState: eyeDropperState;
+  sliderState: sliderState;
+  pencilState: pencilState;
+  eraserState: eraserState;
+  eyeDropperState: eyeDropperState;
 };
 
 export class ProjectState extends State<Tool> {
@@ -86,7 +86,7 @@ export class ProjectState extends State<Tool> {
     return this.canvasElement.getContext("2d")!;
   }
   public getState() {
-    return this.state;
+    return JSON.parse(JSON.stringify(this.state));
   }
   public setState(newState: stateType): void {
     this.state = { ...this.state, ...newState };
