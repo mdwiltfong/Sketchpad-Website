@@ -1,5 +1,4 @@
 import Component, { insertAt } from "./BaseComponent";
-import SketchPad from "./sketchPad";
 
 export enum Color {
   red = "hsl(0,100%,50%)",

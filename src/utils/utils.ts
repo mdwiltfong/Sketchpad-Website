@@ -23,45 +23,76 @@ class State<T> {
   }
 }
 
+type sliderState = {
+  lightSliderValue: number;
+  satSliderValue: number;
+};
+
+type pencilState = {
+  pencil: boolean;
+  drawing: boolean;
+  strokeValue: number;
+  pencilIconBackground: string;
+};
+type eraserState = {
+  eraser: boolean;
+  erasing: boolean;
+  eraserValue: number;
+};
+
+type eyeDropperState = {
+  eyeDropper: boolean;
+  pickingColor: boolean;
+};
+
+type stateType = {
+  readonly sliderState: sliderState;
+  readonly pencilState: pencilState;
+  readonly eraserState: eraserState;
+  readonly eyeDropperState: eyeDropperState;
+};
+
 export class ProjectState extends State<Tool> {
+  private canvasElement: HTMLCanvasElement;
+  private state: stateType = {
+    sliderState: {
+      lightSliderValue: 50,
+      satSliderValue: 50,
+    },
+    pencilState: {
+      pencil: true,
+      drawing: false,
+      strokeValue: 1,
+      pencilIconBackground: "white",
+    },
+    eraserState: {
+      eraser: false,
+      erasing: false,
+      eraserValue: 25,
+    },
+    eyeDropperState: {
+      eyeDropper: false,
+      pickingColor: false,
+    },
+  };
   private tools: Tool[] = [];
   private static instance: ProjectState;
-  // Default values for the sliders
-  private lightSliderValue: Number = 50;
-  private satSliderValue: Number = 100;
-
-  // Pencil State
-  private pencil: Boolean = true;
-  private drawing: Boolean = false;
-  private strokeValue: Number = 1;
-  private pencilIconBackground: String = "white";
-  // Eraser status
-  private eraser: Boolean = false;
-  private erasing: Boolean = false;
-  private eraserValue: Number = 25;
-  // Eye Dropper State
-  private eyeDropper: Boolean = false;
-  private pickingColor: Boolean = false;
 
   private constructor() {
     super();
+    this.canvasElement = document.getElementById("canva") as HTMLCanvasElement;
+  }
+  public getCanvasContext() {
+    return this.canvasElement.getContext("2d")!;
   }
   public getState() {
-    return {
-      lightSliderValue: this.lightSliderValue,
-      satSliderValue: this.satSliderValue,
-      pencil: this.pencil,
-      drawing: this.drawing,
-      strokeValue: this.strokeValue,
-      pencilIconBackground: this.pencilIconBackground,
-      eraser: this.eraser,
-      erasing: this.erasing,
-      eraserValue: this.eraserValue,
-      eyeDropper: this.eyeDropper,
-      pickingColor: this.pickingColor,
-    };
+    return this.state;
   }
-  public setState(newState: any): void {}
+  public setState(newState: stateType): void {
+    this.state = { ...this.state, ...newState };
+    this.updateListeners();
+  }
+
   updateListeners() {
     for (const listenerFn of this.listeners) {
       // We use `.slice()` here because we want to make a copy of the array of listeners, not the original one.

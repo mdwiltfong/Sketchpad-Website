@@ -2,7 +2,8 @@ import Tool from "./Tool";
 import { insertAt } from "../BaseComponent";
 import { bind, projectState } from "../../utils/utils";
 export default class Pencil extends Tool {
-  private isActive: boolean = false;
+  private projectState = projectState.getState();
+  private canvasContext = projectState.getCanvasContext();
   constructor(pathId: string) {
     super("toolbar", "pencil", pathId, "button");
     this.element.setAttribute("id", "pencil");
@@ -32,13 +33,16 @@ export default class Pencil extends Tool {
   }
   @bind
   public startTool(pointerEvent: PointerEvent) {
-    if (pointerEvent.pressure > 0 && this.isActive == true) {
-      drawing = true;
-      let x = e.offsetX;
-      let y = e.offsetY;
-      ctx.moveTo(x, y);
-    } else if (pencil == true) {
-      drawing = true;
+    if (
+      pointerEvent.pressure > 0 &&
+      this.projectState.pencilState.pencil == true
+    ) {
+      this.projectState.pencilState.drawing = true;
+      let x = pointerEvent.offsetX;
+      let y = pointerEvent.offsetY;
+      this.canvasContext.moveTo(x, y);
+    } else if (this.projectState.pencilState.pencil == true) {
+      this.projectState.pencilState.drawing = true;
     }
   }
 }
