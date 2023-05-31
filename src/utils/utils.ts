@@ -15,11 +15,15 @@ export function bind(
   return adjustedDescriptor;
 }
 
-type Listener<T> = (items: T[]) => void;
+type Listener<T> = () => void;
+
+type subscribers = {
+  [key: string]: Listener<any>[];
+};
 class State<T> {
-  protected listeners: Listener<T>[] = [];
+  protected subscribers: subscribers;
   addListener(listenerFn: Listener<T>) {
-    this.listeners.push(listenerFn);
+    this.subscribers;
   }
 }
 
@@ -71,6 +75,7 @@ export class ProjectState extends State<Tool> {
       eraser: false,
       erasing: false,
       eraserValue: 25,
+      backgroundColor: "transparent",
     },
     eyeDropperState: {
       eyeDropper: false,
@@ -96,22 +101,23 @@ export class ProjectState extends State<Tool> {
     this.updateListeners();
   }
 
-  updateListeners() {
-    for (const listenerFn of this.listeners) {
-      // We use `.slice()` here because we want to make a copy of the array of listeners, not the original one.
-      //This is so that we can remove a listener without worrying about a potential error with trying to remove a listener that doesn't exist.
-      listenerFn(this.tools.slice());
+  private updateListeners() {
+    for (const event in this.subscribers) {
+      if (this.subscribers.hasOwnProperty(event)) {
+        const arrayOfListeners = this.subscribers[event];
+        arrayOfListeners.forEach((listener) => {
+          listener();
+        });
+      }
     }
   }
+
   static getInstance() {
     if (this.instance) {
       return this.instance;
     }
     this.instance = new ProjectState();
     return this.instance;
-  }
-  addListener(listener: Listener<Tool>) {
-    this.listeners.push(listener);
   }
 }
 
