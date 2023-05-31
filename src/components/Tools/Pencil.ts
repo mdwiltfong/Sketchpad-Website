@@ -8,6 +8,7 @@ export default class Pencil extends Tool {
     super("toolbar", "pencil", pathId, "button");
     this.element.setAttribute("id", "pencil");
     this.configureFormSettings();
+    projectState.addListener(this.listener);
   }
   private configureFormSettings() {
     const formElement = document.createElement("form");
@@ -57,5 +58,24 @@ export default class Pencil extends Tool {
     this.state.pencilState.pencilIconBackground = "white";
     projectState.setState(this.state);
   }
-  private listener() {}
+  @bind
+  public implementTool(pointerEvent: PointerEvent): void {
+    if (
+      this.state.pencilState.drawing == true &&
+      this.state.pencilState.pencil == true
+    ) {
+      let x = pointerEvent.offsetX;
+      let y = pointerEvent.offsetY;
+      this.canvasContext.lineTo(x, y);
+      this.canvasContext.stroke();
+    }
+  }
+  @bind
+  public stopTool(eventObject: Event): void {
+    this.state.pencilState.drawing = false;
+  }
+  private listener() {
+    this.state.eyeDropperState.backgroundColor = "transparent";
+    this.state.eraserState.backgroundColor = "transparent";
+  }
 }

@@ -38,11 +38,13 @@ type eraserState = {
   eraser: boolean;
   erasing: boolean;
   eraserValue: number;
+  backgroundColor: string;
 };
 
 type eyeDropperState = {
   eyeDropper: boolean;
   pickingColor: boolean;
+  backgroundColor: string;
 };
 
 type stateType = {
@@ -73,6 +75,7 @@ export class ProjectState extends State<Tool> {
     eyeDropperState: {
       eyeDropper: false,
       pickingColor: false,
+      backgroundColor: "buttonface",
     },
   };
   private tools: Tool[] = [];
@@ -85,7 +88,7 @@ export class ProjectState extends State<Tool> {
   public getCanvasContext() {
     return this.canvasElement.getContext("2d")!;
   }
-  public getState() {
+  public getState(): stateType {
     return JSON.parse(JSON.stringify(this.state));
   }
   public setState(newState: stateType): void {
