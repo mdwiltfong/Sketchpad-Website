@@ -23,7 +23,7 @@ export function bind(
   return adjustedDescriptor;
 }
 
-type Listener<T> = () => void;
+type Listener<T> = (data: any) => void;
 
 type subscribers = {
   [key: string]: Listener<any>[];
@@ -81,6 +81,15 @@ export class ProjectState extends State<Tool> {
     const listeners = this.subscribers[eventName] || [];
     listeners.push(callback);
     this.subscribers[eventName] = listeners;
+  }
+
+  public publish(eventName: eventTypes, data: any) {
+    if (!this.subscribers[eventName]) {
+      return;
+    }
+    this.subscribers[eventName].forEach((callback) => {
+      callback(data);
+    });
   }
 
   static getInstance() {
