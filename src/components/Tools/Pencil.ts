@@ -1,6 +1,7 @@
 import Tool from "./Tool";
 import { insertAt } from "../BaseComponent";
 import { bind, projectState } from "../../utils/utils";
+import { eventTypes } from "../../types/types";
 export default class Pencil extends Tool {
   private state = projectState.getState();
   private canvasContext = projectState.getCanvasContext();
@@ -34,16 +35,18 @@ export default class Pencil extends Tool {
   }
   @bind
   public startTool(pointerEvent: PointerEvent) {
-    if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
-      this.state.pencilState.drawing = true;
-      projectState.setState(this.state);
-      let x = pointerEvent.offsetX;
-      let y = pointerEvent.offsetY;
-      this.canvasContext.moveTo(x, y);
-    } else if (this.state.pencilState.pencil == true) {
-      this.state.pencilState.drawing = true;
-      projectState.setState(this.state);
-    }
+    projectState.subscribe(eventTypes.startDrawing, () => {
+      if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
+        this.state.pencilState.drawing = true;
+        projectState.setState(this.state);
+        let x = pointerEvent.offsetX;
+        let y = pointerEvent.offsetY;
+        this.canvasContext.moveTo(x, y);
+      } else if (this.state.pencilState.pencil == true) {
+        this.state.pencilState.drawing = true;
+        projectState.setState(this.state);
+      }
+    });
   }
   @bind
   public activateTool(eventObject: Event): void {
