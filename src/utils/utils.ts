@@ -1,4 +1,12 @@
 import Tool from "../components/Tools/Tool";
+import {
+  stateType,
+  sliderState,
+  pencilState,
+  eraserState,
+  eyeDropperState,
+  eventTypes,
+} from "../types/types";
 
 export function bind(
   target: Object,
@@ -26,37 +34,6 @@ class State<T> {
     this.subscribers;
   }
 }
-
-type sliderState = {
-  lightSliderValue: number;
-  satSliderValue: number;
-};
-
-type pencilState = {
-  pencil: boolean;
-  drawing: boolean;
-  strokeValue: number;
-  pencilIconBackground: string;
-};
-type eraserState = {
-  eraser: boolean;
-  erasing: boolean;
-  eraserValue: number;
-  backgroundColor: string;
-};
-
-type eyeDropperState = {
-  eyeDropper: boolean;
-  pickingColor: boolean;
-  backgroundColor: string;
-};
-
-type stateType = {
-  sliderState: sliderState;
-  pencilState: pencilState;
-  eraserState: eraserState;
-  eyeDropperState: eyeDropperState;
-};
 
 export class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;
@@ -98,18 +75,12 @@ export class ProjectState extends State<Tool> {
   }
   public setState(newState: stateType): void {
     this.state = { ...this.state, ...newState };
-    this.updateListeners();
   }
 
-  private updateListeners() {
-    for (const event in this.subscribers) {
-      if (this.subscribers.hasOwnProperty(event)) {
-        const arrayOfListeners = this.subscribers[event];
-        arrayOfListeners.forEach((listener) => {
-          listener();
-        });
-      }
-    }
+  public subscribe(eventName: eventTypes, callback: Listener<any>) {
+    const listeners = this.subscribers[eventName] || [];
+    listeners.push(callback);
+    this.subscribers[eventName] = listeners;
   }
 
   static getInstance() {
