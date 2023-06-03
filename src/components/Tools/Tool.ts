@@ -42,11 +42,13 @@ export default abstract class Tool extends Component<
     this.pathTag.setAttribute("d", this.pathD);
     this.svg.insertAdjacentElement(insertAt.beforeend, this.pathTag);
   }
-  public renderContent(): void {
+  abstract render(): void;
+  /*   public renderContent(): void {
     this.hostElement.insertAdjacentElement(insertAt.afterbegin, this.element);
-  }
-  abstract startTool(pointerEvent: PointerEvent): void;
+  } */
+
+  /*   abstract startTool(pointerEvent: PointerEvent): void;
   abstract implementTool(eventObject: Event): void;
   abstract stopTool(eventObject: Event): void;
-  abstract activateTool(eventObject: Event): void;
+  abstract activateTool(eventObject: Event): void; */
 }

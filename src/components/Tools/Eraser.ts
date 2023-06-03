@@ -23,4 +23,6 @@ export default class Eraser extends Tool {
     // add element to button
     this.element.insertAdjacentElement(insertAt.afterend, formElement);
   }
+  public renderContent(): void {}
+  public render(): void {}
 }

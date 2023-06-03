@@ -5,4 +5,6 @@ export default class EyeDropper extends Tool {
     super("color-picker-menu", "eye-btn", pathD, "button", "icon", "eraser");
     this.element.setAttribute("id", "eye-btn");
   }
+  public renderContent(): void {}
+  public render(): void {}
 }
