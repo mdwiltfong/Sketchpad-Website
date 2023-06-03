@@ -1,8 +1,5 @@
 import SlideForm from "./components/SlideForm";
-import Eraser from "./components/Tools/Eraser";
-import EyeDropper from "./components/Tools/EyeDropper";
 import Swatch from "./components/swatch";
-import Pencil from "./components/Tools/Pencil";
 import { Color } from "./components/swatch";
 import ToolBar from "./components/Tools/ToolBar";
 new Swatch(Color.red);

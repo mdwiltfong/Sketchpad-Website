@@ -1,8 +1,12 @@
 import Tool from "./Tool";
 import { insertAt } from "../BaseComponent";
-import { stateType } from "../../types/types";
-import { projectState } from "../../utils/utils";
+import { stateType, eventTypes } from "../../types/types";
+import { projectState, bind } from "../../utils/utils";
 export default class Pencil extends Tool {
+  private canvas = projectState.getCanvas();
+  private canvasContext = this.canvas.getContext("2d")!;
+  private pencilButton: HTMLInputElement;
+  private pencilSettings: HTMLFormElement;
   constructor(private strokeValue: number, private state: stateType) {
     super(
       "toolbar",
@@ -11,11 +15,20 @@ export default class Pencil extends Tool {
       "button"
     );
     this.element.setAttribute("id", "pencil");
+    this.configurePencil();
+  }
+  public configurePencil() {
     this.configureFormSettings();
+    this.canvas.addEventListener("pointerdown", this.startTool);
+    this.canvas.addEventListener("pointermove", this.implementTool);
+    this.canvas.addEventListener("pointerup", this.stopTool);
+    this.canvas.addEventListener("pointerleave", this.stopTool);
+    this.pencilButton.addEventListener("click", this.activateTool);
+    this.svg.style.background = this.state.pencilState.pencilIconBackground;
   }
   private configureFormSettings() {
-    const formElement = document.createElement("form");
-    formElement.setAttribute("id", "brush-settings");
+    this.pencilSettings = document.createElement("form");
+    this.pencilSettings.setAttribute("id", "brush-settings");
     const label = document.createElement("label");
     label.setAttribute("for", "stroke-value");
     label.textContent = "Stroke Size";
@@ -24,35 +37,41 @@ export default class Pencil extends Tool {
     strokeSizeInput.id = "stroke-value";
     strokeSizeInput.placeholder = "1-50";
     strokeSizeInput.value = this.strokeValue.toString();
-    const okButton = document.createElement("input");
-    okButton.type = "button";
-    okButton.id = "brush-size";
-    okButton.value = "OK";
-    formElement.insertAdjacentElement(insertAt.afterbegin, label);
+    this.pencilButton = document.createElement("input");
+    this.pencilButton.type = "button";
+    this.pencilButton.id = "brush-size";
+    this.pencilButton.value = "OK";
+    this.pencilSettings.insertAdjacentElement(insertAt.afterbegin, label);
 
-    formElement.insertAdjacentElement(insertAt.beforeend, strokeSizeInput);
-    strokeSizeInput.insertAdjacentElement(insertAt.afterend, okButton);
+    this.pencilSettings.insertAdjacentElement(
+      insertAt.beforeend,
+      strokeSizeInput
+    );
+    strokeSizeInput.insertAdjacentElement(insertAt.afterend, this.pencilButton);
 
     // add element to button
-    this.element.insertAdjacentElement(insertAt.afterend, formElement);
+    this.element.insertAdjacentElement(insertAt.afterend, this.pencilSettings);
   }
   public render(): void {
     this.configureFormSettings();
   }
-  /* @bind
+  @bind
   public startTool(pointerEvent: PointerEvent) {
-    projectState.subscribe(eventTypes.startDrawing, () => {
-      if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
-        this.state.pencilState.drawing = true;
-        projectState.setState(this.state);
-        let x = pointerEvent.offsetX;
-        let y = pointerEvent.offsetY;
-        this.canvasContext.moveTo(x, y);
-      } else if (this.state.pencilState.pencil == true) {
-        this.state.pencilState.drawing = true;
-        projectState.setState(this.state);
-      }
-    });
+    const canvasContext = this.canvas.getContext("2d")!;
+    console.log("pointerdown");
+    if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
+      this.state.pencilState.drawing = true;
+      projectState.setState(this.state);
+      let x = pointerEvent.offsetX;
+      let y = pointerEvent.offsetY;
+      canvasContext.moveTo(x, y);
+    } else if (this.state.pencilState.pencil == true) {
+      this.state.pencilState.drawing = true;
+      projectState.setState(this.state);
+    }
+    /*  projectState.subscribe(eventTypes.startDrawing, () => {
+      
+    }); */
   }
   @bind
   public activateTool(eventObject: Event): void {
@@ -73,6 +92,7 @@ export default class Pencil extends Tool {
       this.state.pencilState.drawing == true &&
       this.state.pencilState.pencil == true
     ) {
+      console.log("impementTool");
       let x = pointerEvent.offsetX;
       let y = pointerEvent.offsetY;
       this.canvasContext.lineTo(x, y);
@@ -82,6 +102,6 @@ export default class Pencil extends Tool {
   @bind
   public stopTool(eventObject: Event): void {
     this.state.pencilState.drawing = false;
-  } */
+  }
   public renderContent(): void {}
 }

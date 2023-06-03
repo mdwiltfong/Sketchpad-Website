@@ -4,7 +4,7 @@ export default abstract class Tool extends Component<
   HTMLDivElement,
   HTMLDivElement
 > {
-  private svg: SVGElement;
+  protected svg: SVGElement;
   private pathTag: SVGPathElement;
   constructor(
     hostElementId: string,

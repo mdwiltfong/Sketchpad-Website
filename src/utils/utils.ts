@@ -67,8 +67,8 @@ export class ProjectState extends State<Tool> {
     super();
     this.canvasElement = document.getElementById("canva") as HTMLCanvasElement;
   }
-  public getCanvasContext() {
-    return this.canvasElement.getContext("2d")!;
+  public getCanvas() {
+    return this.canvasElement!;
   }
   public getState(): stateType {
     return JSON.parse(JSON.stringify(this.state));
