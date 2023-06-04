@@ -38,6 +38,11 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
       projectState.setState(this.state);
       this.renderTools();
     });
+    projectState.subscribe(eventTypes.stopDrawing, (state: stateType) => {
+      this.state.pencilState.drawing = state.pencilState.drawing;
+      projectState.setState(this.state);
+      this.renderTools();
+    });
   }
   private renderTools(): void {
     this.element.innerHTML = "";

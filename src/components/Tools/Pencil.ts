@@ -101,6 +101,7 @@ export default class Pencil extends Tool {
   @bind
   public stopTool(eventObject: Event): void {
     this.state.pencilState.drawing = false;
+    projectState.publish(eventTypes.stopDrawing, this.state);
   }
   public renderContent(): void {}
 }
