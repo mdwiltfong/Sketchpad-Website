@@ -24,7 +24,9 @@ export default class Pencil extends Tool {
     this.canvas.addEventListener("pointerup", this.stopTool);
     this.canvas.addEventListener("pointerleave", this.stopTool);
     this.pencilButton.addEventListener("click", this.activateTool);
-    this.svg.style.background = this.state.pencilState.pencilIconBackground;
+    this.svg.style.background = this.state.pencilState.pencil
+      ? "white"
+      : "transparent";
   }
   private configureFormSettings() {
     this.pencilSettings = document.createElement("form");
@@ -58,7 +60,6 @@ export default class Pencil extends Tool {
   @bind
   public startTool(pointerEvent: PointerEvent) {
     const canvasContext = this.canvas.getContext("2d")!;
-    console.log("pointerdown");
     if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
       this.state.pencilState.drawing = true;
       projectState.setState(this.state);
@@ -67,11 +68,8 @@ export default class Pencil extends Tool {
       canvasContext.moveTo(x, y);
     } else if (this.state.pencilState.pencil == true) {
       this.state.pencilState.drawing = true;
-      projectState.setState(this.state);
     }
-    /*  projectState.subscribe(eventTypes.startDrawing, () => {
-      
-    }); */
+    projectState.publish(eventTypes.startDrawing, this.state);
   }
   @bind
   public activateTool(eventObject: Event): void {
@@ -83,8 +81,9 @@ export default class Pencil extends Tool {
       this.state.eraserState.eraser = false;
       this.state.pencilState.pencil = true;
     }
+    console.log("activateTool");
     this.state.pencilState.pencilIconBackground = "white";
-    projectState.setState(this.state);
+    projectState.publish(eventTypes.activatePencil, this.state);
   }
   @bind
   public implementTool(pointerEvent: PointerEvent): void {

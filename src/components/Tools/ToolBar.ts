@@ -4,6 +4,7 @@ import Pencil from "./Pencil";
 import EyeDropper from "./EyeDropper";
 import Eraser from "./Eraser";
 import Tool from "./Tool";
+import { eventTypes, stateType } from "../../types/types";
 export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
   private clearCanvasBtn: HTMLButtonElement;
   private saveCanvasBtn: HTMLButtonElement;
@@ -13,6 +14,7 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     super("container", insertAt.beforeend, "toolbar");
     this.tools = tools;
     this.renderContent(...tools);
+    this.configure();
     this.renderTools();
   }
   public configure(): void {
@@ -25,6 +27,17 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     this.saveCanvasBtn.innerText = "Save Canvas";
     this.saveCanvasBtn.id = "save";
     this.element.append(this.clearCanvasBtn, this.saveCanvasBtn);
+    projectState.subscribe(eventTypes.activatePencil, (state: stateType) => {
+      this.state = state;
+      console.log("activatePencil subscriber method");
+      projectState.setState(this.state);
+      this.renderTools();
+    });
+    projectState.subscribe(eventTypes.startDrawing, (state: stateType) => {
+      this.state.pencilState.drawing = state.pencilState.drawing;
+      projectState.setState(this.state);
+      this.renderTools();
+    });
   }
   private renderTools(): void {
     this.element.innerHTML = "";

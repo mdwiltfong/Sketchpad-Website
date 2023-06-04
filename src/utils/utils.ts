@@ -29,7 +29,7 @@ type subscribers = {
   [key: string]: Listener<any>[];
 };
 class State<T> {
-  protected subscribers: subscribers;
+  protected subscribers: subscribers = {};
   addListener(listenerFn: Listener<T>) {
     this.subscribers;
   }
