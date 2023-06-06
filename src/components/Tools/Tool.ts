@@ -7,14 +7,11 @@ export default abstract class Tool extends Component<
   protected svg: SVGElement;
   private pathTag: SVGPathElement;
   constructor(
-    hostElementId: string,
     private toolId: string,
     private pathD: string,
-    private elementTag: string,
-    private elementClass?: string,
-    private elementId?: string
+    private elementTag: string
   ) {
-    super(hostElementId, insertAt.afterbegin, elementTag);
+    super("toolbar", insertAt.afterbegin, elementTag);
     this.configure();
     this.renderContent();
   }

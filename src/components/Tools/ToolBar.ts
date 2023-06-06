@@ -24,6 +24,7 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     this.saveCanvasBtn.innerText = "Save Canvas";
     this.saveCanvasBtn.id = "save";
     console.log(this.element);
+    this.element.setAttribute("id", "toolbar");
     this.element.insertAdjacentElement(insertAt.beforeend, this.clearCanvasBtn);
     this.element.insertAdjacentElement(insertAt.beforeend, this.saveCanvasBtn);
     projectState.subscribe(eventTypes.activatePencil, (state: stateType) => {
