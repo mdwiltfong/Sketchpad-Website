@@ -9,11 +9,8 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
   private clearCanvasBtn: HTMLButtonElement;
   private saveCanvasBtn: HTMLButtonElement;
   private state = projectState.getState();
-  private tools: Tool[] = [new Pencil(1, this.state)];
-  constructor(...tools: Tool[]) {
-    super("container", insertAt.beforeend, "toolbar");
-    this.tools = tools;
-    this.renderContent(...tools);
+  constructor() {
+    super("container", insertAt.beforeend, "div");
     this.configure();
     this.renderTools();
   }
@@ -26,7 +23,9 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     this.saveCanvasBtn = document.createElement("button");
     this.saveCanvasBtn.innerText = "Save Canvas";
     this.saveCanvasBtn.id = "save";
-    this.element.append(this.clearCanvasBtn, this.saveCanvasBtn);
+    console.log(this.element);
+    this.element.insertAdjacentElement(insertAt.beforeend, this.clearCanvasBtn);
+    this.element.insertAdjacentElement(insertAt.beforeend, this.saveCanvasBtn);
     projectState.subscribe(eventTypes.activatePencil, (state: stateType) => {
       this.state = state;
       console.log("activatePencil subscriber method");
@@ -46,9 +45,7 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
   }
   private renderTools(): void {
     this.element.innerHTML = "";
-    this.tools.forEach((tool) => {
-      tool.render();
-    });
+    new Pencil(1, this.state);
   }
   public renderContent(...tools: Tool[]): void {}
 }
