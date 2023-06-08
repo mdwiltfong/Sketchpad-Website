@@ -1,7 +1,6 @@
 import SlideForm from "./components/SlideForm";
-import Swatch from "./components/swatch";
-import { Color } from "./components/swatch";
+import Swatchs from "./components/Swatchs";
 import ToolBar from "./components/Tools/ToolBar";
-
+new Swatchs();
 new SlideForm();
 new ToolBar();
