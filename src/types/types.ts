@@ -40,4 +40,5 @@ export enum eventTypes {
   activateEyeDropper = "activateEyeDropper",
   startPickingColor = "startPickingColor",
   stopPickingColor = "stopPickingColor",
+  changePencilColor = "changePencilColor",
 }

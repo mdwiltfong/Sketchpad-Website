@@ -23,6 +23,9 @@ export default class Pencil extends Tool {
     this.canvas.addEventListener("pointermove", this.implementTool);
     this.canvas.addEventListener("pointerup", this.stopTool);
     this.canvas.addEventListener("pointerleave", this.stopTool);
+    this.canvas.addEventListener("mouseup", this.stopTool);
+    this.canvas.addEventListener("mouseleave", this.stopTool);
+
     this.pencilButton.addEventListener("click", this.activateTool);
     this.svg.style.background = this.state.pencilState.pencil
       ? "white"
@@ -61,18 +64,19 @@ export default class Pencil extends Tool {
   public startTool(pointerEvent: PointerEvent) {
     const canvasContext = this.canvas.getContext("2d")!;
     if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
+      console.log("startTool - Pencil");
       this.state.pencilState.drawing = true;
-      projectState.setState(this.state);
       let x = pointerEvent.offsetX;
       let y = pointerEvent.offsetY;
       canvasContext.moveTo(x, y);
     } else if (this.state.pencilState.pencil == true) {
       this.state.pencilState.drawing = true;
     }
-    projectState.publish(eventTypes.startDrawing, this.state);
+    //projectState.publish(eventTypes.startDrawing, this.state);
   }
   @bind
   public activateTool(eventObject: Event): void {
+    console.log("activateTool - Pencil");
     if (
       this.state.eraserState.eraser == true ||
       this.state.eyeDropperState.eyeDropper == true
@@ -86,12 +90,12 @@ export default class Pencil extends Tool {
     projectState.publish(eventTypes.activatePencil, this.state);
   }
   @bind
-  public implementTool(pointerEvent: PointerEvent): void {
+  public implementTool(pointerEvent: PointerEvent & MouseEvent): void {
     if (
       this.state.pencilState.drawing == true &&
       this.state.pencilState.pencil == true
     ) {
-      console.log("impementTool");
+      console.log("impementTool - Pencil");
       let x = pointerEvent.offsetX;
       let y = pointerEvent.offsetY;
       this.canvasContext.lineTo(x, y);
@@ -100,8 +104,8 @@ export default class Pencil extends Tool {
   }
   @bind
   public stopTool(eventObject: Event): void {
+    console.log("stopTool - Pencil");
     this.state.pencilState.drawing = false;
-    projectState.publish(eventTypes.stopDrawing, this.state);
   }
   public renderContent(): void {}
 }
