@@ -1,3 +1,4 @@
+import { boundEventListenerType } from "../../types/types";
 import Component, { insertAt } from "../BaseComponent";
 
 export default abstract class Tool extends Component<
@@ -6,6 +7,7 @@ export default abstract class Tool extends Component<
 > {
   protected svg: SVGElement;
   private pathTag: SVGPathElement;
+
   constructor(
     private toolId: string,
     private pathD: string,
@@ -40,11 +42,7 @@ export default abstract class Tool extends Component<
     this.svg.insertAdjacentElement(insertAt.beforeend, this.pathTag);
   }
   abstract render(): void;
-  /*   public renderContent(): void {
-    this.hostElement.insertAdjacentElement(insertAt.afterbegin, this.element);
-  } */
-
-  /*   abstract startTool(pointerEvent: PointerEvent): void;
+  /*  abstract startTool(pointerEvent: PointerEvent): void;
   abstract implementTool(eventObject: Event): void;
   abstract stopTool(eventObject: Event): void;
   abstract activateTool(eventObject: Event): void; */

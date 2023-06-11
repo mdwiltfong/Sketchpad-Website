@@ -6,6 +6,8 @@ import {
   eraserState,
   eyeDropperState,
   eventTypes,
+  boundEventListenerType,
+  eventListenerType,
 } from "../types/types";
 
 export function bind(
@@ -37,6 +39,7 @@ class State<T> {
 
 export class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;
+  private boundEventListeners: boundEventListenerType;
   private state: stateType = {
     sliderState: {
       lightSliderValue: 50,
@@ -60,7 +63,6 @@ export class ProjectState extends State<Tool> {
       backgroundColor: "buttonface",
     },
   };
-  private tools: Tool[] = [];
   private static instance: ProjectState;
 
   private constructor() {
@@ -75,6 +77,13 @@ export class ProjectState extends State<Tool> {
   }
   public setState(newState: stateType): void {
     this.state = { ...this.state, ...newState };
+  }
+  public addEventListener(
+    event: eventListenerType,
+    callback: (e: PointerEvent | MouseEvent) => void
+  ): void {
+    this.boundEventListeners[event] = callback;
+    this.canvasElement.addEventListener(event, callback);
   }
 
   public subscribe(eventName: eventTypes, callback: Listener<any>) {

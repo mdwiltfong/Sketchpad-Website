@@ -42,3 +42,15 @@ export enum eventTypes {
   stopPickingColor = "stopPickingColor",
   changePencilColor = "changePencilColor",
 }
+export type eventListenerType =
+  | "pointerdown"
+  | "pointerup"
+  | "pointermove"
+  | "pointercancel"
+  | "pointerleave"
+  | "click";
+export type boundEventListenerType = {
+  [event in eventListenerType]: event extends "click"
+    ? (e: MouseEvent) => void
+    : (e: PointerEvent) => void;
+};
