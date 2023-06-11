@@ -48,7 +48,7 @@ export default class Pencil extends Tool {
     this.pencilButton.id = "brush-size";
     this.pencilButton.value = "OK";
     this.pencilSettings.insertAdjacentElement(insertAt.afterbegin, label);
-
+    this.pencilButton.addEventListener("click", this.activateTool);
     this.pencilSettings.insertAdjacentElement(
       insertAt.beforeend,
       strokeSizeInput
@@ -76,18 +76,19 @@ export default class Pencil extends Tool {
   }
   @bind
   public activateTool(eventObject: MouseEvent): void {
-    console.log("activateTool - Pencil");
     if (
       this.state.eraserState.eraser == true ||
       this.state.eyeDropperState.eyeDropper == true
     ) {
-      this.state.eyeDropperState.eyeDropper = false;
-      this.state.eraserState.eraser = false;
-      this.state.pencilState.pencil = true;
+      if (this.state.pencilState.pencil == false) {
+        this.state.eyeDropperState.eyeDropper = false;
+        this.state.eraserState.eraser = false;
+        this.state.pencilState.pencil = true;
+        console.log("activateTool - pencil");
+        this.state.pencilState.pencilIconBackground = "white";
+        projectState.publish(eventTypes.activatePencil, this.state);
+      }
     }
-    console.log("activateTool");
-    this.state.pencilState.pencilIconBackground = "white";
-    projectState.publish(eventTypes.activatePencil, this.state);
   }
   @bind
   public implementTool(pointerEvent: PointerEvent): void {

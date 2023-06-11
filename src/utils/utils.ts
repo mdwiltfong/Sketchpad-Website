@@ -50,19 +50,19 @@ class State<T> {
   }
 }
 const eventMap: {
-  [e in eventTypes]: eventListenerType;
+  [e in eventTypes]: eventListenerType[];
 } = {
-  startDrawing: "pointerdown",
-  stopDrawing: "pointerup",
-  drawing: "pointermove",
-  activatePencil: "click",
-  activateEraser: "click",
-  startErasing: "pointerdown",
-  stopErasing: "pointerup",
-  changeBrushSize: "click",
-  activateEyeDropper: "click",
-  startPickingColor: "pointerdown",
-  stopPickingColor: "pointerup",
+  startDrawing: ["pointerdown"],
+  stopDrawing: ["pointerup", "pointerleave"],
+  drawing: ["pointermove"],
+  activatePencil: ["click"],
+  activateEraser: ["click"],
+  startErasing: ["pointerdown"],
+  stopErasing: ["pointerup"],
+  changeBrushSize: ["click"],
+  activateEyeDropper: ["click"],
+  startPickingColor: ["pointerdown"],
+  stopPickingColor: ["pointerup"],
 };
 export class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;
@@ -107,7 +107,11 @@ export class ProjectState extends State<Tool> {
   public subscribe(eventName: eventTypes, callback: Listener<any>) {
     if (this.subscribers[eventName].length > 0) return;
     const listeners = this.subscribers[eventName];
-    this.canvasElement.addEventListener(eventMap[eventName], callback);
+    eventMap[eventName].forEach((event) => {
+      if (event === "click") {
+      }
+      this.canvasElement.addEventListener(event, callback);
+    });
     listeners.push(callback);
     this.subscribers[eventName] = listeners;
   }
