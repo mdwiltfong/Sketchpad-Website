@@ -8,7 +8,7 @@ export default class Pencil extends Tool {
   private canvasContext = this.canvas.getContext("2d")!;
   private pencilButton: HTMLInputElement;
   private pencilSettings: HTMLFormElement;
-  constructor(private strokeValue: number, private state: stateType) {
+  constructor(private state: stateType) {
     // This super is using the toolbar in the HTML to anchor the pencil versus the div that is created in ToolBar. As a result it doesn't empty the div.
     super(
       "pencil",
@@ -42,7 +42,7 @@ export default class Pencil extends Tool {
     strokeSizeInput.type = "text";
     strokeSizeInput.id = "stroke-value";
     strokeSizeInput.placeholder = "1-50";
-    strokeSizeInput.value = this.strokeValue.toString();
+    strokeSizeInput.value = this.state.pencilState.strokeValue.toString();
     this.pencilButton = document.createElement("input");
     this.pencilButton.type = "button";
     this.pencilButton.id = "brush-size";

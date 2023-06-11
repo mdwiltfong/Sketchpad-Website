@@ -15,24 +15,7 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     this.configure();
     this.renderTools();
   }
-  public configure(): void {
-    /*   projectState.subscribe(eventTypes.activatePencil, (state: stateType) => {
-      this.state = state;
-      console.log("activatePencil subscriber method");
-      projectState.setState(this.state);
-      this.renderTools();
-    });
-    projectState.subscribe(eventTypes.startDrawing, (state: stateType) => {
-      this.state.pencilState.drawing = state.pencilState.drawing;
-      projectState.setState(this.state);
-      this.renderTools();
-    });
-    projectState.subscribe(eventTypes.stopDrawing, (state: stateType) => {
-      this.state.pencilState.drawing = state.pencilState.drawing;
-      projectState.setState(this.state);
-      this.renderTools();
-    }); */
-  }
+  public configure(): void {}
   private renderCanvasButtons(): void {
     this.clearCanvasBtn = document.createElement("button");
     this.clearCanvasBtn.innerText = "Clear Canvas";
@@ -48,7 +31,7 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
   }
   private renderTools(): void {
     this.element.innerHTML = "";
-    new Pencil(1, this.state);
+    new Pencil(this.state);
     this.renderCanvasButtons();
   }
   public renderContent(...tools: Tool[]): void {}
