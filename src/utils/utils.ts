@@ -1,3 +1,4 @@
+import { extend } from "lodash";
 import Tool from "../components/Tools/Tool";
 import {
   stateType,
@@ -25,21 +26,46 @@ export function bind(
   return adjustedDescriptor;
 }
 
-type Listener<T> = (data: any) => void;
+type Listener<T> = (eventObject: T) => void;
 
 type subscribers = {
-  [key: string]: Listener<any>[];
+  [key in eventTypes]: Listener<any>[];
 };
 class State<T> {
-  protected subscribers: subscribers = {};
+  protected subscribers: subscribers = {
+    startDrawing: [],
+    drawing: [],
+    activateEraser: [],
+    activatePencil: [],
+    activateEyeDropper: [],
+    startErasing: [],
+    stopErasing: [],
+    changeBrushSize: [],
+    stopDrawing: [],
+    startPickingColor: [],
+    stopPickingColor: [],
+  };
   addListener(listenerFn: Listener<T>) {
     this.subscribers;
   }
 }
-
+const eventMap: {
+  [e in eventTypes]: eventListenerType;
+} = {
+  startDrawing: "pointerdown",
+  stopDrawing: "pointerup",
+  drawing: "pointermove",
+  activatePencil: "click",
+  activateEraser: "click",
+  startErasing: "pointerdown",
+  stopErasing: "pointerup",
+  changeBrushSize: "click",
+  activateEyeDropper: "click",
+  startPickingColor: "pointerdown",
+  stopPickingColor: "pointerup",
+};
 export class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;
-  private boundEventListeners: boundEventListenerType;
   private state: stateType = {
     sliderState: {
       lightSliderValue: 50,
@@ -78,16 +104,10 @@ export class ProjectState extends State<Tool> {
   public setState(newState: stateType): void {
     this.state = { ...this.state, ...newState };
   }
-  public addEventListener(
-    event: eventListenerType,
-    callback: (e: PointerEvent | MouseEvent) => void
-  ): void {
-    this.boundEventListeners[event] = callback;
-    this.canvasElement.addEventListener(event, callback);
-  }
-
   public subscribe(eventName: eventTypes, callback: Listener<any>) {
-    const listeners = this.subscribers[eventName] || [];
+    if (this.subscribers[eventName].length > 0) return;
+    const listeners = this.subscribers[eventName];
+    this.canvasElement.addEventListener(eventMap[eventName], callback);
     listeners.push(callback);
     this.subscribers[eventName] = listeners;
   }

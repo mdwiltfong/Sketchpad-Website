@@ -18,19 +18,20 @@ export default class Pencil extends Tool {
 
     this.element.setAttribute("id", "pencil");
     this.configurePencil();
+    projectState.subscribe(eventTypes.startDrawing, this.startTool);
+    projectState.subscribe(eventTypes.drawing, this.implementTool);
+    projectState.subscribe(eventTypes.stopDrawing, this.stopTool);
   }
   public addBoundEventListener(): void {}
   public configurePencil() {
     this.addBoundEventListener();
     this.configureFormSettings();
-    this.clearEventListeners();
 
     this.pencilButton.addEventListener("click", this.activateTool);
     this.svg.style.background = this.state.pencilState.pencil
       ? "white"
       : "transparent";
   }
-  private clearEventListeners() {}
   private configureFormSettings() {
     this.pencilSettings = document.createElement("form");
     this.pencilSettings.setAttribute("id", "brush-settings");
@@ -72,7 +73,6 @@ export default class Pencil extends Tool {
     } else if (this.state.pencilState.pencil == true) {
       this.state.pencilState.drawing = true;
     }
-    projectState.publish(eventTypes.startDrawing, this.state);
   }
   @bind
   public activateTool(eventObject: MouseEvent): void {
@@ -106,7 +106,6 @@ export default class Pencil extends Tool {
   public stopTool(eventObject: Event): void {
     console.log("stopTool - Pencil");
     this.state.pencilState.drawing = false;
-    projectState.publish(eventTypes.stopDrawing, this.state);
   }
   public renderContent(): void {}
 }
