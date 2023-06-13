@@ -27,6 +27,11 @@ export default class Pencil extends Tool {
       "activatePencil",
       this.activateTool
     );
+    projectState.addEventListener(
+      this.pencilSettings,
+      "changeBrushSize",
+      this.changeBrushSize
+    );
   }
   public configurePencil() {
     this.configureFormSettings();
@@ -63,6 +68,22 @@ export default class Pencil extends Tool {
   }
   public render(): void {
     this.configureFormSettings();
+  }
+
+  private changeBrushSize(e: KeyboardEvent): void {
+    let key = e.key;
+    const { strokeValue } = this.state.pencilState;
+    if (strokeValue <= 50 && key === "Enter") {
+      e.preventDefault();
+      this.canvasContext.beginPath();
+      this.canvasContext.lineWidth = strokeValue;
+    } else if (strokeValue <= 50) {
+      this.canvasContext.beginPath();
+      this.canvasContext.lineWidth = strokeValue;
+    } else if (strokeValue > 50) {
+      alert("Only values 1 through 50 are accepted");
+      this.state.pencilState.strokeValue = 1;
+    }
   }
   @bind
   public startTool(pointerEvent: Event) {

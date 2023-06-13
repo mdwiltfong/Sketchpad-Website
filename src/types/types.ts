@@ -47,4 +47,5 @@ export type eventListenerType =
   | "pointermove"
   | "pointerup"
   | "pointerleave"
-  | "click";
+  | "click"
+  | "keydown";

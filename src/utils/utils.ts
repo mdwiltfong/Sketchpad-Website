@@ -47,7 +47,7 @@ const eventMap: {
   activateEraser: ["click"],
   startErasing: ["pointerdown"],
   stopErasing: ["pointerup"],
-  changeBrushSize: ["click"],
+  changeBrushSize: ["keydown"],
   activateEyeDropper: ["click"],
   startPickingColor: ["pointerdown"],
   stopPickingColor: ["pointerup"],
@@ -106,7 +106,10 @@ export class ProjectState extends State<Tool> {
   public addEventListener(
     element: HTMLElement,
     eventName: eventTypes,
-    callback: (this: HTMLElement, e: PointerEvent | MouseEvent) => any
+    callback: (
+      this: HTMLElement,
+      e: PointerEvent | MouseEvent | KeyboardEvent
+    ) => any
   ) {
     if (this.subscribers[eventName].length > 0) return;
     const listeners = this.subscribers[eventName];
