@@ -29,29 +29,22 @@ export type stateType = {
   eyeDropperState: eyeDropperState;
 };
 
-export enum eventTypes {
-  activatePencil = "activatePencil",
-  activateEraser = "activateEraser",
-  startDrawing = "startDrawing",
-  stopDrawing = "stopDrawing",
-  startErasing = "startErasing",
-  stopErasing = "stopErasing",
-  changeBrushSize = "changeBrushSize",
-  activateEyeDropper = "activateEyeDropper",
-  startPickingColor = "startPickingColor",
-  stopPickingColor = "stopPickingColor",
-  drawing = "drawing",
-}
+export type eventTypes =
+  | "activatePencil"
+  | "startDrawing"
+  | "stopDrawing"
+  | "startErasing"
+  | "stopErasing"
+  | "changeBrushSize"
+  | "activateEyeDropper"
+  | "startPickingColor"
+  | "stopPickingColor"
+  | "drawing"
+  | "activateEraser";
+
 export type eventListenerType =
   | "pointerdown"
-  | "pointerup"
   | "pointermove"
-  | "pointercancel"
+  | "pointerup"
   | "pointerleave"
   | "click";
-
-export type boundEventListenerType = {
-  [event in eventListenerType]: event extends "click"
-    ? (e: MouseEvent) => void
-    : (e: PointerEvent) => void;
-};

@@ -1,15 +1,6 @@
 import { extend } from "lodash";
 import Tool from "../components/Tools/Tool";
-import {
-  stateType,
-  sliderState,
-  pencilState,
-  eraserState,
-  eyeDropperState,
-  eventTypes,
-  boundEventListenerType,
-  eventListenerType,
-} from "../types/types";
+import { stateType, eventTypes, eventListenerType } from "../types/types";
 
 export function bind(
   target: Object,
@@ -29,7 +20,7 @@ export function bind(
 type Listener<T> = (eventObject: T) => void;
 
 type subscribers = {
-  [key in eventTypes]: Listener<any>[];
+  [key in eventTypes]: Listener<PointerEvent>[];
 };
 class State<T> {
   protected subscribers: subscribers = {
@@ -50,7 +41,7 @@ class State<T> {
   }
 }
 const eventMap: {
-  [e in eventTypes]: eventListenerType[];
+  [key in eventTypes]: eventListenerType[];
 } = {
   startDrawing: ["pointerdown"],
   stopDrawing: ["pointerup", "pointerleave"],
@@ -104,12 +95,24 @@ export class ProjectState extends State<Tool> {
   public setState(newState: stateType): void {
     this.state = { ...this.state, ...newState };
   }
-  public subscribe(eventName: eventTypes, callback: Listener<any>) {
+  /*
+  subscriber method for eventlisteners
+  @param eventName: eventTypes
+  @param callback: (this: HTMLElement, e: PointerEvent | MouseEvent) => any
+  @returns: void
+  @description: adds eventlisteners to the canvas element while also keeping track of these listeners
+  @example:
+  projectState.subscribe("startDrawing", (e) => {
+    console.log(e);
+  }
+  */
+  public subscribe(
+    eventName: eventTypes,
+    callback: (this: HTMLElement, e: PointerEvent | MouseEvent) => any
+  ) {
     if (this.subscribers[eventName].length > 0) return;
     const listeners = this.subscribers[eventName];
     eventMap[eventName].forEach((event) => {
-      if (event === "click") {
-      }
       this.canvasElement.addEventListener(event, callback);
     });
     listeners.push(callback);

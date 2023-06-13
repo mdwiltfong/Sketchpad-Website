@@ -18,9 +18,9 @@ export default class Pencil extends Tool {
 
     this.element.setAttribute("id", "pencil");
     this.configurePencil();
-    projectState.subscribe(eventTypes.startDrawing, this.startTool);
-    projectState.subscribe(eventTypes.drawing, this.implementTool);
-    projectState.subscribe(eventTypes.stopDrawing, this.stopTool);
+    projectState.subscribe("startDrawing", this.startTool);
+    projectState.subscribe("drawing", this.implementTool);
+    projectState.subscribe("stopDrawing", this.stopTool);
   }
   public addBoundEventListener(): void {}
   public configurePencil() {
@@ -48,7 +48,6 @@ export default class Pencil extends Tool {
     this.pencilButton.id = "brush-size";
     this.pencilButton.value = "OK";
     this.pencilSettings.insertAdjacentElement(insertAt.afterbegin, label);
-    this.pencilButton.addEventListener("click", this.activateTool);
     this.pencilSettings.insertAdjacentElement(
       insertAt.beforeend,
       strokeSizeInput
@@ -62,45 +61,50 @@ export default class Pencil extends Tool {
     this.configureFormSettings();
   }
   @bind
-  public startTool(pointerEvent: PointerEvent) {
-    const canvasContext = this.canvas.getContext("2d")!;
-    if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
-      console.log("startTool - Pencil");
-      this.state.pencilState.drawing = true;
-      let x = pointerEvent.offsetX;
-      let y = pointerEvent.offsetY;
-      canvasContext.moveTo(x, y);
-    } else if (this.state.pencilState.pencil == true) {
-      this.state.pencilState.drawing = true;
-    }
-  }
-  @bind
-  public activateTool(eventObject: MouseEvent): void {
-    if (
-      this.state.eraserState.eraser == true ||
-      this.state.eyeDropperState.eyeDropper == true
-    ) {
-      if (this.state.pencilState.pencil == false) {
-        this.state.eyeDropperState.eyeDropper = false;
-        this.state.eraserState.eraser = false;
-        this.state.pencilState.pencil = true;
-        console.log("activateTool - pencil");
-        this.state.pencilState.pencilIconBackground = "white";
-        projectState.publish(eventTypes.activatePencil, this.state);
+  public startTool(pointerEvent: Event) {
+    if (pointerEvent instanceof PointerEvent) {
+      this.startTool(pointerEvent);
+      const canvasContext = this.canvas.getContext("2d")!;
+      if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
+        console.log("startTool - Pencil");
+        this.state.pencilState.drawing = true;
+        let x = pointerEvent.offsetX;
+        let y = pointerEvent.offsetY;
+        canvasContext.moveTo(x, y);
+      } else if (this.state.pencilState.pencil == true) {
+        this.state.pencilState.drawing = true;
       }
     }
   }
   @bind
-  public implementTool(pointerEvent: PointerEvent): void {
+  public activateTool(eventObject: MouseEvent, state?: stateType): void {
     if (
-      this.state.pencilState.drawing == true &&
-      this.state.pencilState.pencil == true
+      this.state.eraserState.eraser == true ||
+      this.state.eyeDropperState.eyeDropper == true ||
+      this.state.pencilState.pencil == false
     ) {
-      console.log("impementTool - Pencil");
-      let x = pointerEvent.offsetX;
-      let y = pointerEvent.offsetY;
-      this.canvasContext.lineTo(x, y);
-      this.canvasContext.stroke();
+      this.state.eyeDropperState.eyeDropper = false;
+      this.state.eraserState.eraser = false;
+      this.state.pencilState.pencil = true;
+      console.log("activateTool - pencil");
+      this.state.pencilState.pencilIconBackground = "white";
+      // TODO: Need to think about this some more. Maybe write out a diagram.
+      projectState.publish("activatePencil", this.state);
+    }
+  }
+  @bind
+  public implementTool(pointerEvent: Event): void {
+    if (pointerEvent instanceof PointerEvent) {
+      if (
+        this.state.pencilState.drawing == true &&
+        this.state.pencilState.pencil == true
+      ) {
+        console.log("impementTool - Pencil");
+        let x = pointerEvent.offsetX;
+        let y = pointerEvent.offsetY;
+        this.canvasContext.lineTo(x, y);
+        this.canvasContext.stroke();
+      }
     }
   }
   @bind
