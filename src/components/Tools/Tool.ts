@@ -1,4 +1,3 @@
-import { boundEventListenerType } from "../../types/types";
 import Component, { insertAt } from "../BaseComponent";
 
 export default abstract class Tool extends Component<

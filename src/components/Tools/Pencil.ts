@@ -18,9 +18,14 @@ export default class Pencil extends Tool {
 
     this.element.setAttribute("id", "pencil");
     this.configurePencil();
-    projectState.subscribe("startDrawing", this.startTool);
-    projectState.subscribe("drawing", this.implementTool);
-    projectState.subscribe("stopDrawing", this.stopTool);
+    projectState.addEventListener(this.canvas, "startDrawing", this.startTool);
+    projectState.addEventListener(this.canvas, "drawing", this.implementTool);
+    projectState.addEventListener(this.canvas, "stopDrawing", this.stopTool);
+    projectState.addEventListener(
+      this.pencilButton,
+      "activatePencil",
+      this.activateTool
+    );
   }
   public addBoundEventListener(): void {}
   public configurePencil() {
@@ -63,7 +68,6 @@ export default class Pencil extends Tool {
   @bind
   public startTool(pointerEvent: Event) {
     if (pointerEvent instanceof PointerEvent) {
-      this.startTool(pointerEvent);
       const canvasContext = this.canvas.getContext("2d")!;
       if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
         console.log("startTool - Pencil");
@@ -78,6 +82,7 @@ export default class Pencil extends Tool {
   }
   @bind
   public activateTool(eventObject: MouseEvent, state?: stateType): void {
+    console.log("Activate Pencil");
     if (
       this.state.eraserState.eraser == true ||
       this.state.eyeDropperState.eyeDropper == true ||

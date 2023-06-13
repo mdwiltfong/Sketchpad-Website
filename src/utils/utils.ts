@@ -36,9 +36,6 @@ class State<T> {
     startPickingColor: [],
     stopPickingColor: [],
   };
-  addListener(listenerFn: Listener<T>) {
-    this.subscribers;
-  }
 }
 const eventMap: {
   [key in eventTypes]: eventListenerType[];
@@ -106,14 +103,15 @@ export class ProjectState extends State<Tool> {
     console.log(e);
   }
   */
-  public subscribe(
+  public addEventListener(
+    element: HTMLElement,
     eventName: eventTypes,
     callback: (this: HTMLElement, e: PointerEvent | MouseEvent) => any
   ) {
     if (this.subscribers[eventName].length > 0) return;
     const listeners = this.subscribers[eventName];
     eventMap[eventName].forEach((event) => {
-      this.canvasElement.addEventListener(event, callback);
+      element.addEventListener(event, callback);
     });
     listeners.push(callback);
     this.subscribers[eventName] = listeners;
