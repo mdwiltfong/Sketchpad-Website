@@ -2,7 +2,7 @@ import Component, { insertAt } from "../BaseComponent";
 
 export default abstract class Tool extends Component<
   HTMLDivElement,
-  HTMLDivElement
+  HTMLButtonElement
 > {
   protected svg: SVGElement;
   private pathTag: SVGPathElement;

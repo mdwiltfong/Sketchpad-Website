@@ -8,6 +8,7 @@ export default class Pencil extends Tool {
   private canvasContext = this.canvas.getContext("2d")!;
   private pencilButton: HTMLInputElement;
   private pencilSettings: HTMLFormElement;
+  private pencilIcon: HTMLButtonElement;
   constructor(private state: stateType) {
     // This super is using the toolbar in the HTML to anchor the pencil versus the div that is created in ToolBar. As a result it doesn't empty the div.
     super(
@@ -22,17 +23,15 @@ export default class Pencil extends Tool {
     projectState.addEventListener(this.canvas, "drawing", this.implementTool);
     projectState.addEventListener(this.canvas, "stopDrawing", this.stopTool);
     projectState.addEventListener(
-      this.pencilButton,
+      this.pencilIcon,
       "activatePencil",
       this.activateTool
     );
   }
-  public addBoundEventListener(): void {}
   public configurePencil() {
-    this.addBoundEventListener();
     this.configureFormSettings();
-
-    this.pencilButton.addEventListener("click", this.activateTool);
+    this.pencilIcon = this.element;
+    //this.pencilButton.addEventListener("click", this.activateTool);
     this.svg.style.background = this.state.pencilState.pencil
       ? "white"
       : "transparent";
@@ -81,8 +80,8 @@ export default class Pencil extends Tool {
     }
   }
   @bind
-  public activateTool(eventObject: MouseEvent, state?: stateType): void {
-    console.log("Activate Pencil");
+  public activateTool(eventObject: MouseEvent): void {
+    console.log("Activate Pencil ");
     if (
       this.state.eraserState.eraser == true ||
       this.state.eyeDropperState.eyeDropper == true ||

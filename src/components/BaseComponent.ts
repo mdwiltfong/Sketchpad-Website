@@ -6,7 +6,7 @@ export enum insertAt {
 
 export default abstract class Component<
   T extends HTMLElement & HTMLDivElement,
-  U extends HTMLElement | HTMLFormElement | HTMLDivElement
+  U extends HTMLElement | HTMLFormElement | HTMLDivElement | HTMLButtonElement
 > {
   protected hostElement: T;
   protected element: U;
