@@ -19,15 +19,27 @@ export default class Pencil extends Tool {
 
     this.element.setAttribute("id", "pencil");
     this.configurePencil();
-    projectState.addEventListener(this.canvas, "startDrawing", this.startTool);
-    projectState.addEventListener(this.canvas, "drawing", this.implementTool);
-    projectState.addEventListener(this.canvas, "stopDrawing", this.stopTool);
-    projectState.addEventListener(
+    projectState.addEventListener<PointerEvent>(
+      this.canvas,
+      "startDrawing",
+      this.startTool
+    );
+    projectState.addEventListener<PointerEvent>(
+      this.canvas,
+      "drawing",
+      this.implementTool
+    );
+    projectState.addEventListener<PointerEvent>(
+      this.canvas,
+      "stopDrawing",
+      this.stopTool
+    );
+    projectState.addEventListener<MouseEvent>(
       this.pencilIcon,
       "activatePencil",
       this.activateTool
     );
-    projectState.addEventListener(
+    projectState.addEventListener<KeyboardEvent>(
       this.pencilSettings,
       "changeBrushSize",
       this.changeBrushSize
@@ -86,23 +98,22 @@ export default class Pencil extends Tool {
     }
   }
   @bind
-  public startTool(pointerEvent: Event) {
-    if (pointerEvent instanceof PointerEvent) {
-      const canvasContext = this.canvas.getContext("2d")!;
-      if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
-        console.log("startTool - Pencil");
-        this.state.pencilState.drawing = true;
-        let x = pointerEvent.offsetX;
-        let y = pointerEvent.offsetY;
-        canvasContext.moveTo(x, y);
-      } else if (this.state.pencilState.pencil == true) {
-        this.state.pencilState.drawing = true;
-      }
+  public startTool(pointerEvent: PointerEvent) {
+    const canvasContext = this.canvas.getContext("2d")!;
+    if (pointerEvent.pressure > 0 && this.state.pencilState.pencil == true) {
+      console.log("startTool - Pencil");
+      this.state.pencilState.drawing = true;
+      let x = pointerEvent.offsetX;
+      let y = pointerEvent.offsetY;
+      canvasContext.moveTo(x, y);
+    } else if (this.state.pencilState.pencil == true) {
+      this.state.pencilState.drawing = true;
     }
   }
   @bind
   public activateTool(eventObject: MouseEvent): void {
     console.log("Activate Pencil ");
+
     if (
       this.state.eraserState.eraser == true ||
       this.state.eyeDropperState.eyeDropper == true ||
@@ -118,18 +129,16 @@ export default class Pencil extends Tool {
     }
   }
   @bind
-  public implementTool(pointerEvent: Event): void {
-    if (pointerEvent instanceof PointerEvent) {
-      if (
-        this.state.pencilState.drawing == true &&
-        this.state.pencilState.pencil == true
-      ) {
-        console.log("impementTool - Pencil");
-        let x = pointerEvent.offsetX;
-        let y = pointerEvent.offsetY;
-        this.canvasContext.lineTo(x, y);
-        this.canvasContext.stroke();
-      }
+  public implementTool(pointerEvent: PointerEvent): void {
+    if (
+      this.state.pencilState.drawing == true &&
+      this.state.pencilState.pencil == true
+    ) {
+      console.log("impementTool - Pencil");
+      let x = pointerEvent.offsetX;
+      let y = pointerEvent.offsetY;
+      this.canvasContext.lineTo(x, y);
+      this.canvasContext.stroke();
     }
   }
   @bind

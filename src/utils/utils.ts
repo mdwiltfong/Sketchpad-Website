@@ -20,7 +20,7 @@ export function bind(
 type Listener<T> = (eventObject: T) => void;
 
 type subscribers = {
-  [key in eventTypes]: Listener<PointerEvent>[];
+  [key in eventTypes]: EventListener[];
 };
 class State<T> {
   protected subscribers: subscribers = {
@@ -103,20 +103,17 @@ export class ProjectState extends State<Tool> {
     console.log(e);
   }
   */
-  public addEventListener(
+  public addEventListener<T extends PointerEvent | MouseEvent | KeyboardEvent>(
     element: HTMLElement,
     eventName: eventTypes,
-    callback: (
-      this: HTMLElement,
-      e: PointerEvent | MouseEvent | KeyboardEvent
-    ) => any
+    callback: (this: HTMLElement, e: T) => any
   ) {
     if (this.subscribers[eventName].length > 0) return;
     const listeners = this.subscribers[eventName];
     eventMap[eventName].forEach((event) => {
-      element.addEventListener(event, callback);
+      element.addEventListener(event, callback as EventListener);
     });
-    listeners.push(callback);
+    listeners.push(callback as EventListener);
     this.subscribers[eventName] = listeners;
   }
 
