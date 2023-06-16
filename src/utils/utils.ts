@@ -47,7 +47,7 @@ const eventMap: {
   activateEraser: ["click"],
   startErasing: ["pointerdown"],
   stopErasing: ["pointerup"],
-  changeBrushSize: ["keydown"],
+  changeBrushSize: ["submit"],
   activateEyeDropper: ["click"],
   startPickingColor: ["pointerdown"],
   stopPickingColor: ["pointerup"],

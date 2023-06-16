@@ -9,6 +9,7 @@ export default class Pencil extends Tool {
   private pencilButton: HTMLInputElement;
   private pencilSettings: HTMLFormElement;
   private pencilIcon: HTMLButtonElement;
+  private strokeInput: HTMLInputElement;
   constructor(private state: stateType) {
     // This super is using the toolbar in the HTML to anchor the pencil versus the div that is created in ToolBar. As a result it doesn't empty the div.
     super(
@@ -59,11 +60,11 @@ export default class Pencil extends Tool {
     const label = document.createElement("label");
     label.setAttribute("for", "stroke-value");
     label.textContent = "Stroke Size";
-    const strokeSizeInput = document.createElement("input");
-    strokeSizeInput.type = "text";
-    strokeSizeInput.id = "stroke-value";
-    strokeSizeInput.placeholder = "1-50";
-    strokeSizeInput.value = this.state.pencilState.strokeValue.toString();
+    this.strokeInput = document.createElement("input");
+    this.strokeInput.type = "text";
+    this.strokeInput.id = "stroke-value";
+    this.strokeInput.placeholder = "1-50";
+    this.strokeInput.value = this.state.pencilState.strokeValue.toString();
     this.pencilButton = document.createElement("input");
     this.pencilButton.type = "button";
     this.pencilButton.id = "brush-size";
@@ -71,9 +72,12 @@ export default class Pencil extends Tool {
     this.pencilSettings.insertAdjacentElement(insertAt.afterbegin, label);
     this.pencilSettings.insertAdjacentElement(
       insertAt.beforeend,
-      strokeSizeInput
+      this.strokeInput
     );
-    strokeSizeInput.insertAdjacentElement(insertAt.afterend, this.pencilButton);
+    this.strokeInput.insertAdjacentElement(
+      insertAt.afterend,
+      this.pencilButton
+    );
 
     // add element to button
     this.element.insertAdjacentElement(insertAt.afterend, this.pencilSettings);
@@ -81,11 +85,13 @@ export default class Pencil extends Tool {
   public render(): void {
     this.configureFormSettings();
   }
-
+  @bind
   private changeBrushSize(e: KeyboardEvent): void {
+    console.log("changeBrushSize");
+    e.preventDefault();
     let key = e.key;
-    const { strokeValue } = this.state.pencilState;
-    if (strokeValue <= 50 && key === "Enter") {
+    
+    /*    if (strokeValue <= 50 && key === "Enter") {
       e.preventDefault();
       this.canvasContext.beginPath();
       this.canvasContext.lineWidth = strokeValue;
@@ -95,7 +101,7 @@ export default class Pencil extends Tool {
     } else if (strokeValue > 50) {
       alert("Only values 1 through 50 are accepted");
       this.state.pencilState.strokeValue = 1;
-    }
+    } */
   }
   @bind
   public startTool(pointerEvent: PointerEvent) {
