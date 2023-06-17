@@ -21,29 +21,29 @@ export default class Pencil extends Tool {
     this.element.setAttribute("id", "pencil");
     this.configurePencil();
     projectState.addEventListener<PointerEvent>(
-      this.canvas,
       "startDrawing",
-      this.startTool
+      this.startTool,
+      this.canvas
     );
     projectState.addEventListener<PointerEvent>(
-      this.canvas,
       "drawing",
-      this.implementTool
+      this.implementTool,
+      this.canvas
     );
     projectState.addEventListener<PointerEvent>(
-      this.canvas,
       "stopDrawing",
-      this.stopTool
+      this.stopTool,
+      this.canvas
     );
     projectState.addEventListener<MouseEvent>(
-      this.pencilIcon,
       "activatePencil",
-      this.activateTool
+      this.activateTool,
+      this.pencilIcon
     );
     projectState.addEventListener<KeyboardEvent>(
-      this.pencilSettings,
       "changeBrushSize",
-      this.changeBrushSize
+      this.changeBrushSize,
+      this.pencilSettings
     );
   }
   public configurePencil() {
@@ -94,17 +94,15 @@ export default class Pencil extends Tool {
       true
     ).childNodes[1] as HTMLInputElement;
     const strokeValue = Number(inputElement.value);
-    if (strokeValue <= 50) {
-      this.canvasContext.beginPath();
-      this.canvasContext.lineWidth = strokeValue;
-    } else if (strokeValue <= 50) {
-      this.canvasContext.beginPath();
-      this.canvasContext.lineWidth = strokeValue;
-    } else if (strokeValue > 50 || strokeValue == undefined) {
+    if (strokeValue > 50 || strokeValue < 1 || strokeValue == undefined) {
       alert("Only values 1 through 50 are accepted");
-      this.state.pencilState.strokeValue = 1;
+      return;
     }
-    projectState.publish;
+
+    this.canvasContext.beginPath();
+    this.canvasContext.lineWidth = strokeValue;
+    this.state.pencilState.strokeValue = strokeValue;
+    projectState.publish("changeBrushSize", this.state);
   }
   @bind
   public startTool(pointerEvent: PointerEvent) {

@@ -1,4 +1,4 @@
-import { extend } from "lodash";
+import { List, extend } from "lodash";
 import Tool from "../components/Tools/Tool";
 import { stateType, eventTypes, eventListenerType } from "../types/types";
 
@@ -17,10 +17,10 @@ export function bind(
   return adjustedDescriptor;
 }
 
-type Listener<T> = (eventObject: T) => void;
+type Listener<T> = (dataObject: T) => void;
 
 type subscribers = {
-  [key in eventTypes]: EventListener[];
+  [key in eventTypes]: (EventListener | Listener<stateType>)[];
 };
 class State<T> {
   protected subscribers: subscribers = {
@@ -103,25 +103,34 @@ export class ProjectState extends State<Tool> {
     console.log(e);
   }
   */
-  public addEventListener<T extends PointerEvent | MouseEvent | KeyboardEvent>(
-    element: HTMLElement,
+  public addEventListener<
+    T extends PointerEvent | MouseEvent | KeyboardEvent | stateType
+  >(
     eventName: eventTypes,
-    callback: (this: HTMLElement, e: T) => any
+    callback: (this: HTMLElement, e: T) => any | Listener<stateType>,
+    element?: HTMLElement
   ) {
     if (this.subscribers[eventName].length > 0) return;
     const listeners = this.subscribers[eventName];
-    eventMap[eventName].forEach((event) => {
-      element.addEventListener(event, callback as EventListener);
-    });
-    listeners.push(callback as EventListener);
-    this.subscribers[eventName] = listeners;
+    if (element) {
+      eventMap[eventName].forEach((event) => {
+        element.addEventListener(event, callback as EventListener);
+      });
+      listeners.push(callback as EventListener);
+    } else {
+      listeners.push(callback as Listener<stateType>);
+    }
   }
-
-  public publish(eventName: eventTypes, data: any) {
+  public subscribeState(eventName: eventTypes, callback: Listener<stateType>) {
+    if (this.subscribers[eventName].length > 0) return;
+    this.subscribers[eventName].push(callback);
+  }
+  public publish(eventName: eventTypes, data: stateType) {
     if (!this.subscribers[eventName]) {
       return;
     }
-    this.subscribers[eventName].forEach((callback) => {
+    const callbacks = this.subscribers[eventName] as Listener<stateType>[];
+    callbacks.forEach((callback) => {
       callback(data);
     });
   }

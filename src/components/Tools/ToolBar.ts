@@ -4,13 +4,17 @@ import Pencil from "./Pencil";
 import EyeDropper from "./EyeDropper";
 import Eraser from "./Eraser";
 import Tool from "./Tool";
-import { eventTypes, stateType } from "../../types/types";
+import {  stateType } from "../../types/types";
 export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
   private clearCanvasBtn: HTMLButtonElement;
   private saveCanvasBtn: HTMLButtonElement;
   private state = projectState.getState();
   constructor() {
     super("container", insertAt.beforeend, "div");
+    projectState.subscribeState("changeBrushSize", (data: stateType) => {
+      projectState.setState(data);
+      this.renderTools();
+    });
     this.renderCanvasButtons();
     this.configure();
     this.renderTools();
@@ -30,6 +34,8 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     this.element.insertAdjacentElement(insertAt.beforeend, this.saveCanvasBtn);
   }
   private renderTools(): void {
+    console.log("Render Tools");
+    console.log(this.element);
     this.element.innerHTML = "";
     new Pencil(this.state);
     this.renderCanvasButtons();
