@@ -42,6 +42,8 @@ export type eventTypes =
   | "drawing"
   | "activateEraser";
 
+export type stateSubscriberTypes = "changeBrushSize";
+
 export type eventListenerType =
   | "pointerdown"
   | "pointermove"

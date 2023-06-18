@@ -1,6 +1,11 @@
 import { List, extend } from "lodash";
 import Tool from "../components/Tools/Tool";
-import { stateType, eventTypes, eventListenerType } from "../types/types";
+import {
+  stateType,
+  eventTypes,
+  eventListenerType,
+  stateSubscriberTypes,
+} from "../types/types";
 
 export function bind(
   target: Object,
@@ -19,11 +24,15 @@ export function bind(
 
 type Listener<T> = (dataObject: T) => void;
 
-type subscribers = {
+type eventListenerObjectType = {
   [key in eventTypes]: (EventListener | Listener<stateType>)[];
 };
+
+type StateSubscribers = {
+  [key in stateSubscriberTypes]: Listener<stateType>[];
+};
 class State<T> {
-  protected subscribers: subscribers = {
+  protected eventListeners: eventListenerObjectType = {
     startDrawing: [],
     drawing: [],
     activateEraser: [],
@@ -35,6 +44,9 @@ class State<T> {
     stopDrawing: [],
     startPickingColor: [],
     stopPickingColor: [],
+  };
+  protected subscribers: StateSubscribers = {
+    changeBrushSize: [],
   };
 }
 const eventMap: {
@@ -110,8 +122,8 @@ export class ProjectState extends State<Tool> {
     callback: (this: HTMLElement, e: T) => any | Listener<stateType>,
     element?: HTMLElement
   ) {
-    if (this.subscribers[eventName].length > 0) return;
-    const listeners = this.subscribers[eventName];
+    if (this.eventListeners[eventName].length > 0) return;
+    const listeners = this.eventListeners[eventName];
     if (element) {
       eventMap[eventName].forEach((event) => {
         element.addEventListener(event, callback as EventListener);
@@ -121,11 +133,14 @@ export class ProjectState extends State<Tool> {
       listeners.push(callback as Listener<stateType>);
     }
   }
-  public subscribeState(eventName: eventTypes, callback: Listener<stateType>) {
+  public subscribeState(
+    eventName: stateSubscriberTypes,
+    callback: Listener<stateType>
+  ) {
     if (this.subscribers[eventName].length > 0) return;
     this.subscribers[eventName].push(callback);
   }
-  public publish(eventName: eventTypes, data: stateType) {
+  public publish(eventName: stateSubscriberTypes, data: stateType) {
     if (!this.subscribers[eventName]) {
       return;
     }

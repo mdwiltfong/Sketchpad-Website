@@ -132,7 +132,7 @@ export default class Pencil extends Tool {
       console.log("activateTool - pencil");
       this.state.pencilState.pencilIconBackground = "white";
       // TODO: Need to think about this some more. Maybe write out a diagram.
-      projectState.publish("activatePencil", this.state);
+      //projectState.publish("activatePencil", this.state);
     }
   }
   @bind
