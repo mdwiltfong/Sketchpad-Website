@@ -14,9 +14,9 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
   private swatchDiv: HTMLDivElement;
   private color: string;
   private innerText: string;
-  constructor(color: Color) {
+  constructor(defaultColor: Color) {
     super("color-picker-menu", insertAt.beforeend, "div");
-    this.color = color;
+    this.color = defaultColor;
     this.configure();
   }
 

@@ -1,6 +1,7 @@
 import { eventTypes } from "../types/types";
 import { bind, projectState } from "../utils/utils";
 import Component, { insertAt } from "./BaseComponent";
+import SlideForm from "./SlideForm";
 import Swatch, { Color } from "./swatch";
 
 export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
@@ -15,6 +16,7 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
     )! as HTMLDivElement;
     this.renderContent();
     this.configure();
+    new SlideForm();
   }
 
   public renderContent(): void {
