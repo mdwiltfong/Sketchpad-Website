@@ -9,6 +9,7 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
   private canvas = projectState.getCanvas();
   private canvasCtx = this.canvas.getContext("2d")!;
   private currentColor: HTMLDivElement;
+  private swatchSettingsForm: HTMLFormElement;
   constructor() {
     super("container-canvas", insertAt.afterbegin, "color-picker-menu");
     this.currentColor = document.getElementById(
@@ -20,13 +21,13 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
   }
 
   public renderContent(): void {
-    new Swatch(Color.red);
-    new Swatch(Color.white);
-    new Swatch(Color.black);
-    new Swatch(Color.blue);
-    new Swatch(Color.green);
-    new Swatch(Color.orange);
-    new Swatch(Color.pink);
+    new Swatch(Color.red, this.state);
+    new Swatch(Color.white, this.state);
+    new Swatch(Color.black, this.state);
+    new Swatch(Color.blue, this.state);
+    new Swatch(Color.green, this.state);
+    new Swatch(Color.orange, this.state);
+    new Swatch(Color.pink, this.state);
   }
   @bind
   private pickSwatch(e: Event): void {

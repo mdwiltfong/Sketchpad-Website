@@ -1,3 +1,5 @@
+import { stateType } from "../types/types";
+import { bind, projectState } from "../utils/utils";
 import Component, { insertAt } from "./BaseComponent";
 
 export enum Color {
@@ -14,7 +16,7 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
   private swatchDiv: HTMLDivElement;
   private color: string;
   private innerText: string;
-  constructor(defaultColor: Color) {
+  constructor(defaultColor: Color, private state: stateType) {
     super("color-picker-menu", insertAt.beforeend, "div");
     this.color = defaultColor;
     this.configure();
@@ -38,6 +40,18 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
     swatch.innerText = this.innerText;
     this.element.appendChild(swatch);
     return this.element;
+  }
+  @bind
+  private updateLightness(e: InputEvent): void {
+    e.preventDefault();
+    const [h, s, l] = this.extractHSL(this.color);
+    const { sliderState } = this.state;
+    this.color = `hsl(${h},${s}%,${sliderState.lightSliderValue.toString()}%)`;
+  }
+  private extractHSL(hsl: string): number[] {
+    const regex = /\d+/g;
+    const matches = hsl.match(regex);
+    return matches!.map(Number);
   }
   private configureInnerText() {
     switch (this.color) {

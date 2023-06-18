@@ -69,7 +69,7 @@ export class ProjectState extends State<Tool> {
   private state: stateType = {
     sliderState: {
       lightSliderValue: 50,
-      satSliderValue: 50,
+      satSliderValue: 100,
     },
     pencilState: {
       pencil: true,
