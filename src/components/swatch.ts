@@ -41,18 +41,7 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
     this.element.appendChild(swatch);
     return this.element;
   }
-  @bind
-  private updateLightness(e: InputEvent): void {
-    e.preventDefault();
-    const [h, s, l] = this.extractHSL(this.color);
-    const { sliderState } = this.state;
-    this.color = `hsl(${h},${s}%,${sliderState.lightSliderValue.toString()}%)`;
-  }
-  private extractHSL(hsl: string): number[] {
-    const regex = /\d+/g;
-    const matches = hsl.match(regex);
-    return matches!.map(Number);
-  }
+
   private configureInnerText() {
     switch (this.color) {
       case Color.red:

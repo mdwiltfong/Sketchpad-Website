@@ -9,7 +9,6 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
   private canvas = projectState.getCanvas();
   private canvasCtx = this.canvas.getContext("2d")!;
   private currentColor: HTMLDivElement;
-  private swatchSettingsForm: HTMLFormElement;
   constructor() {
     super("container-canvas", insertAt.afterbegin, "color-picker-menu");
     this.currentColor = document.getElementById(
@@ -17,7 +16,7 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
     )! as HTMLDivElement;
     this.renderContent();
     this.configure();
-    new SlideForm();
+    new SlideForm(this.state, this.canvasCtx);
   }
 
   public renderContent(): void {

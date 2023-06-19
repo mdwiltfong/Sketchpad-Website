@@ -1,13 +1,24 @@
+import { stateType } from "../types/types";
+import { bind, projectState } from "../utils/utils";
 import Component, { insertAt } from "./BaseComponent";
 
 export default class SlideForm extends Component<
   HTMLDivElement,
   HTMLFormElement
 > {
-  constructor() {
+  private lightInputElement: HTMLInputElement;
+  constructor(
+    private state: stateType,
+    private canvasContext: CanvasRenderingContext2D
+  ) {
     super("color-picker-menu", insertAt.beforeend, "form");
     this.configure();
     this.renderContent();
+    projectState.addEventListener<InputEvent>(
+      "updateLightness",
+      this.updateLightness,
+      this.lightInputElement
+    );
   }
 
   public configure() {
@@ -15,10 +26,10 @@ export default class SlideForm extends Component<
     const lightLabel = document.createElement("label");
     lightLabel.setAttribute("for", "lightness");
     lightLabel.innerText = "Light";
-    const lightInput = document.createElement("input");
-    lightInput.type = "range";
-    lightInput.id = "lightness";
-    lightInput.className = "range";
+    this.lightInputElement = document.createElement("input");
+    this.lightInputElement.type = "range";
+    this.lightInputElement.id = "lightness";
+    this.lightInputElement.className = "range";
     // Saturation slider
     const saturationLabel = document.createElement("label");
     saturationLabel.setAttribute("for", "saturation");
@@ -29,11 +40,23 @@ export default class SlideForm extends Component<
     saturationInput.className = "range";
 
     this.element.appendChild(lightLabel);
-    this.element.appendChild(lightInput);
+    this.element.appendChild(this.lightInputElement);
     this.element.appendChild(saturationLabel);
     this.element.appendChild(saturationInput);
     this.element.id = "slide-form";
     return this.element;
+  }
+  @bind
+  private updateLightness(e: InputEvent): void {
+    e.preventDefault();
+    console.log("updateLightness");
+    const { sliderState } = this.state;
+    sliderState.lightSliderValue = Number(this.lightInputElement.value);
+  }
+  private extractHSL(hsl: string): number[] {
+    const regex = /\d+/g;
+    const matches = hsl.match(regex);
+    return matches!.map(Number);
   }
   public renderContent() {}
 }

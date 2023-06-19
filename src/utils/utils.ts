@@ -1,4 +1,3 @@
-import { List, extend } from "lodash";
 import Tool from "../components/Tools/Tool";
 import {
   stateType,
@@ -116,7 +115,7 @@ export class ProjectState extends State<Tool> {
   }
   */
   public addEventListener<
-    T extends PointerEvent | MouseEvent | KeyboardEvent | stateType
+    T extends PointerEvent | MouseEvent | KeyboardEvent | stateType | InputEvent
   >(
     eventName: eventTypes,
     callback: (this: HTMLElement, e: T) => any | Listener<stateType>,
