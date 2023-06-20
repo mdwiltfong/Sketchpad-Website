@@ -43,6 +43,7 @@ class State<T> {
     stopDrawing: [],
     startPickingColor: [],
     stopPickingColor: [],
+    updateLightness: [],
   };
   protected subscribers: StateSubscribers = {
     changeBrushSize: [],
@@ -62,6 +63,7 @@ const eventMap: {
   activateEyeDropper: ["click"],
   startPickingColor: ["pointerdown"],
   stopPickingColor: ["pointerup"],
+  updateLightness: ["input"],
 };
 export class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;
