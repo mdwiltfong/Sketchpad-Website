@@ -43,7 +43,7 @@ export type eventTypes =
   | "activateEraser"
   | "updateLightness";
 
-export type stateSubscriberTypes = "changeBrushSize";
+export type stateSubscriberTypes = "changeBrushSize" | "updateLightness";
 
 export type eventListenerType =
   | "pointerdown"

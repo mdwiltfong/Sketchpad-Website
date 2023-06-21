@@ -50,8 +50,10 @@ export default class SlideForm extends Component<
   private updateLightness(e: InputEvent): void {
     e.preventDefault();
     console.log("updateLightness");
-    const { sliderState } = this.state;
-    sliderState.lightSliderValue = Number(this.lightInputElement.value);
+    this.state.sliderState.lightSliderValue = Number(
+      this.lightInputElement.value
+    );
+    projectState.publish("updateLightness", this.state);
   }
   private extractHSL(hsl: string): number[] {
     const regex = /\d+/g;

@@ -47,6 +47,7 @@ class State<T> {
   };
   protected subscribers: StateSubscribers = {
     changeBrushSize: [],
+    updateLightness: [],
   };
 }
 const eventMap: {

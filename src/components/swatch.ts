@@ -1,24 +1,39 @@
 import { stateType } from "../types/types";
-import { bind, projectState } from "../utils/utils";
 import Component, { insertAt } from "./BaseComponent";
 
 export enum Color {
-  red = "hsl(0,100%,50%)",
-  white = "hsl(0,100%,100%)",
-  black = "hsl(0,100%,0%)",
-  blue = "hsl(240,100%,50%)",
-  green = "hsl(120,100%,50%)",
-  orange = "hsl(30,100%,50%)",
-  pink = "hsl(330,100%,50%)",
+  red = "red",
+  white = "white",
+  black = "black",
+  blue = "blue",
+  green = "green",
+  orange = "orange",
+  pink = "pink",
 }
+const colorMap = {
+  red: [0, 100, 50],
+  white: [0, 100, 100],
+  black: [0, 100, 0],
+  blue: [240, 100, 50],
+  green: [120, 100, 50],
+  orange: [30, 100, 50],
+  pink: [330, 100, 50],
+};
 
 export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
   private swatchDiv: HTMLDivElement;
-  private color: string;
   private innerText: string;
-  constructor(defaultColor: Color, private state: stateType) {
+  private hue: Number;
+  private saturation: Number;
+  private lightness: Number;
+  private hslColor: string;
+  constructor(private defaultColor: Color, private state: stateType) {
     super("color-picker-menu", insertAt.beforeend, "div");
-    this.color = defaultColor;
+    const [h, s, l] = colorMap[defaultColor];
+    this.hue = h;
+    this.saturation = s;
+    this.lightness = l;
+    this.hslColor = this.calculateColor(h, s, l);
     this.configure();
   }
 
@@ -27,23 +42,27 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
     this.swatchDiv = this.createSwatchElement();
     this.renderContent();
   }
+
   public renderContent() {
     this.hostElement.appendChild(this.swatchDiv);
   }
+  private calculateColor(h: number, s: number, l: number): string {
+    return `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
+  }
   private createSwatchElement(): HTMLDivElement {
-    this.element.setAttribute("style", `background-color:${this.color}`);
+    this.element.setAttribute("style", `background-color:${this.hslColor}`);
     this.element.setAttribute("class", "swatch");
     const swatch = document.createElement("button");
     swatch.className = "swatch-btn";
     swatch.type = "button";
-    swatch.value = this.color;
+    swatch.value = this.hslColor;
     swatch.innerText = this.innerText;
     this.element.appendChild(swatch);
     return this.element;
   }
 
   private configureInnerText() {
-    switch (this.color) {
+    switch (this.defaultColor) {
       case Color.red:
         this.innerText = "Red";
         break;

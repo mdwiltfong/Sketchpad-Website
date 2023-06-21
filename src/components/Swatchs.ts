@@ -16,7 +16,12 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
     )! as HTMLDivElement;
     this.renderContent();
     this.configure();
-    new SlideForm(this.state, this.canvasCtx);
+
+    projectState.subscribeState("updateLightness", () => {
+      document.getElementById("color-picker-menu")!.innerHTML = "";
+      this.renderContent();
+      this.configure();
+    });
   }
 
   public renderContent(): void {
@@ -27,6 +32,7 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
     new Swatch(Color.green, this.state);
     new Swatch(Color.orange, this.state);
     new Swatch(Color.pink, this.state);
+    new SlideForm(this.state, this.canvasCtx);
   }
   @bind
   private pickSwatch(e: Event): void {
