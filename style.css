@@ -39,6 +39,14 @@ body #wrapper #container #container-canvas #color-picker-menu {
   height: 200px;
   border: 2px black;
 }
+body #wrapper #container #container-canvas #color-picker-menu #swatches {
+  position: relative;
+  bottom: 15px;
+  right: 730px;
+  width: 80px;
+  height: 200px;
+  border: 2px black;
+}
 body #wrapper #container #container-canvas #color-picker-menu .swatch {
   height: 40px;
   width: 40px;

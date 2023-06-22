@@ -10,7 +10,7 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
   private canvasCtx = this.canvas.getContext("2d")!;
   private currentColor: HTMLDivElement;
   constructor() {
-    super("container-canvas", insertAt.afterbegin, "color-picker-menu");
+    super("container-canvas", insertAt.afterbegin, "div");
     this.currentColor = document.getElementById(
       "currentcolor"
     )! as HTMLDivElement;
@@ -18,10 +18,15 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
     this.configure();
 
     projectState.subscribeState("updateLightness", () => {
-      document.getElementById("color-picker-menu")!.innerHTML = "";
+      // This method is too destructive. It only needs to remove the swatches. Not everything under `color-picker-menu`.
+      const swatchs = document.getElementsByClassName("swatch");
+      while (swatchs.length > 0) {
+        swatchs[0].parentNode!.removeChild(swatchs[0]);
+      }
       this.renderContent();
       this.configure();
     });
+    new SlideForm(this.state, this.canvasCtx);
   }
 
   public renderContent(): void {
@@ -32,7 +37,6 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
     new Swatch(Color.green, this.state);
     new Swatch(Color.orange, this.state);
     new Swatch(Color.pink, this.state);
-    new SlideForm(this.state, this.canvasCtx);
   }
   @bind
   private pickSwatch(e: Event): void {
