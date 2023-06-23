@@ -1,8 +1,10 @@
 import { stateType } from "../../types/types";
+import { bind, projectState } from "../../utils/utils";
 import { insertAt } from "../BaseComponent";
 import Tool from "./Tool";
 
 export default class Eraser extends Tool {
+  private canvas: HTMLCanvasElement = projectState.getCanvas();
   constructor(private state: stateType) {
     super(
       "eraser",
@@ -11,6 +13,11 @@ export default class Eraser extends Tool {
     );
     this.element.setAttribute("id", "eraser");
     this.configureFormSettings();
+    projectState.addEventListener<PointerEvent>(
+      "activateEraser",
+      this.startTool,
+      this.element
+    );
   }
   private configureFormSettings() {
     const formElement = document.createElement("form");
@@ -27,6 +34,23 @@ export default class Eraser extends Tool {
     formElement.insertAdjacentElement(insertAt.beforeend, rangeInput);
     // add element to button
     this.element.insertAdjacentElement(insertAt.afterend, formElement);
+  }
+  @bind
+  public startTool(pointerEvent: PointerEvent): void {
+    console.log("startTool - Eraser");
+    if (this.state.eraserState.eraser == false) {
+      // Update eraser state
+      this.state.eraserState.eraser = true;
+      this.state.eraserState.backgroundColor = "White";
+      // Update pencil state
+      this.state.pencilState.pencil = false;
+      this.state.pencilState.pencilIconBackground = "transparent";
+      //Update eye dropper state
+      this.state.eyeDropperState.eyeDropper = false;
+      this.state.eyeDropperState.backgroundColor = "transparent";
+
+      projectState.publish("activateEraser", this.state);
+    }
   }
   public renderContent(): void {}
   public render(): void {}

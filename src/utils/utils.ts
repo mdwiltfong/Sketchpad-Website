@@ -50,6 +50,7 @@ class State<T> {
     changeBrushSize: [],
     updateLightness: [],
     updateSaturation: [],
+    activateEraser: [],
   };
 }
 const eventMap: {
