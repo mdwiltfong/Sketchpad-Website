@@ -37,6 +37,7 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     console.log(this.element);
     this.element.innerHTML = "";
     new Pencil(this.state);
+    new Eraser(this.state);
     this.renderCanvasButtons();
   }
   public renderContent(...tools: Tool[]): void {}
