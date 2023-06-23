@@ -28,7 +28,7 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
   private lightness: Number;
   private hslColor: string;
   constructor(private defaultColor: Color, private state: stateType) {
-    super("color-picker-menu", insertAt.beforeend, "div");
+    super("color-picker-menu", insertAt.afterbegin, "div");
     const [h, s, l] = colorMap[defaultColor];
     this.hue = h;
     this.saturation = s;
@@ -44,7 +44,7 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
   }
 
   public renderContent() {
-    this.hostElement.appendChild(this.swatchDiv);
+    this.hostElement.insertAdjacentElement(insertAt.afterbegin, this.swatchDiv);
   }
   private calculateColor(h: number, s: number, l: number): string {
     return `hsl(${this.hue}, ${this.saturation}%, ${this.lightness}%)`;
@@ -57,7 +57,7 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
     swatch.type = "button";
     swatch.value = this.hslColor;
     swatch.innerText = this.innerText;
-    this.element.appendChild(swatch);
+    this.element.insertAdjacentElement(insertAt.afterbegin, swatch);
     return this.element;
   }
 
