@@ -31,8 +31,8 @@ export default class Swatch extends Component<HTMLDivElement, HTMLDivElement> {
     super("color-picker-menu", insertAt.afterbegin, "div");
     const [h, s, l] = colorMap[defaultColor];
     this.hue = h;
-    this.saturation = s;
-    this.lightness = l;
+    this.saturation = (s * this.state.sliderState.satSliderValue) / 100;
+    this.lightness = (l * this.state.sliderState.lightSliderValue) / 100;
     this.hslColor = this.calculateColor(h, s, l);
     this.configure();
   }

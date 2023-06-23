@@ -26,6 +26,15 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
       this.renderContent();
       this.configure();
     });
+    projectState.subscribeState("updateSaturation", () => {
+      // This method is too destructive. It only needs to remove the swatches. Not everything under `color-picker-menu`.
+      const swatchs = document.getElementsByClassName("swatch");
+      while (swatchs.length > 0) {
+        swatchs[0].parentNode!.removeChild(swatchs[0]);
+      }
+      this.renderContent();
+      this.configure();
+    });
     new SlideForm(this.state, this.canvasCtx);
   }
 

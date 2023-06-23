@@ -7,6 +7,7 @@ export default class SlideForm extends Component<
   HTMLFormElement
 > {
   private lightInputElement: HTMLInputElement;
+  private saturationInputElement: HTMLInputElement;
   constructor(
     private state: stateType,
     private canvasContext: CanvasRenderingContext2D
@@ -19,6 +20,11 @@ export default class SlideForm extends Component<
       this.updateLightness,
       this.lightInputElement
     );
+    projectState.addEventListener<InputEvent>(
+      "updateSaturation",
+      this.updateSaturation,
+      this.saturationInputElement
+    );
   }
 
   public configure() {
@@ -30,19 +36,23 @@ export default class SlideForm extends Component<
     this.lightInputElement.type = "range";
     this.lightInputElement.id = "lightness";
     this.lightInputElement.className = "range";
+    this.lightInputElement.value =
+      this.state.sliderState.lightSliderValue.toString();
     // Saturation slider
     const saturationLabel = document.createElement("label");
     saturationLabel.setAttribute("for", "saturation");
     saturationLabel.innerText = "Saturation";
-    const saturationInput = document.createElement("input");
-    saturationInput.type = "range";
-    saturationInput.id = "saturation";
-    saturationInput.className = "range";
+    this.saturationInputElement = document.createElement("input");
+    this.saturationInputElement.type = "range";
+    this.saturationInputElement.id = "saturation";
+    this.saturationInputElement.className = "range";
+    this.saturationInputElement.value =
+      this.state.sliderState.satSliderValue.toString();
 
     this.element.appendChild(lightLabel);
     this.element.appendChild(this.lightInputElement);
     this.element.appendChild(saturationLabel);
-    this.element.appendChild(saturationInput);
+    this.element.appendChild(this.saturationInputElement);
     this.element.id = "slide-form";
     return this.element;
   }
@@ -54,6 +64,15 @@ export default class SlideForm extends Component<
       this.lightInputElement.value
     );
     projectState.publish("updateLightness", this.state);
+  }
+  @bind
+  private updateSaturation(e: InputEvent): void {
+    e.preventDefault();
+    console.log("updateSaturation");
+    this.state.sliderState.satSliderValue = Number(
+      this.saturationInputElement.value
+    );
+    projectState.publish("updateSaturation", this.state);
   }
   private extractHSL(hsl: string): number[] {
     const regex = /\d+/g;

@@ -44,10 +44,12 @@ class State<T> {
     startPickingColor: [],
     stopPickingColor: [],
     updateLightness: [],
+    updateSaturation: [],
   };
   protected subscribers: StateSubscribers = {
     changeBrushSize: [],
     updateLightness: [],
+    updateSaturation: [],
   };
 }
 const eventMap: {
@@ -65,12 +67,13 @@ const eventMap: {
   startPickingColor: ["pointerdown"],
   stopPickingColor: ["pointerup"],
   updateLightness: ["input"],
+  updateSaturation: ["input"],
 };
 export class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;
   private state: stateType = {
     sliderState: {
-      lightSliderValue: 50,
+      lightSliderValue: 100,
       satSliderValue: 100,
     },
     pencilState: {

@@ -41,9 +41,13 @@ export type eventTypes =
   | "stopPickingColor"
   | "drawing"
   | "activateEraser"
-  | "updateLightness";
+  | "updateLightness"
+  | "updateSaturation";
 
-export type stateSubscriberTypes = "changeBrushSize" | "updateLightness";
+export type stateSubscriberTypes =
+  | "changeBrushSize"
+  | "updateLightness"
+  | "updateSaturation";
 
 export type eventListenerType =
   | "pointerdown"
