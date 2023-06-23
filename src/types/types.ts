@@ -40,9 +40,14 @@ export type eventTypes =
   | "startPickingColor"
   | "stopPickingColor"
   | "drawing"
-  | "activateEraser";
+  | "activateEraser"
+  | "updateLightness"
+  | "updateSaturation";
 
-export type stateSubscriberTypes = "changeBrushSize";
+export type stateSubscriberTypes =
+  | "changeBrushSize"
+  | "updateLightness"
+  | "updateSaturation";
 
 export type eventListenerType =
   | "pointerdown"
@@ -50,4 +55,5 @@ export type eventListenerType =
   | "pointerup"
   | "pointerleave"
   | "click"
-  | "submit";
+  | "submit"
+  | "input";

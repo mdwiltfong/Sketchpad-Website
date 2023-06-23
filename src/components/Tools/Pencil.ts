@@ -3,6 +3,7 @@ import { insertAt } from "../BaseComponent";
 import { stateType, eventTypes } from "../../types/types";
 import { projectState, bind } from "../../utils/utils";
 import * as _ from "lodash";
+import PencilSettings from "../PencilSettings";
 export default class Pencil extends Tool {
   private canvas = projectState.getCanvas();
   private canvasContext = this.canvas.getContext("2d")!;
@@ -40,11 +41,6 @@ export default class Pencil extends Tool {
       this.activateTool,
       this.pencilIcon
     );
-    projectState.addEventListener<KeyboardEvent>(
-      "changeBrushSize",
-      this.changeBrushSize,
-      this.pencilSettings
-    );
   }
   public configurePencil() {
     this.configureFormSettings();
@@ -55,55 +51,12 @@ export default class Pencil extends Tool {
       : "transparent";
   }
   private configureFormSettings() {
-    this.pencilSettings = document.createElement("form");
-    this.pencilSettings.setAttribute("id", "brush-settings");
-    const label = document.createElement("label");
-    label.setAttribute("for", "stroke-value");
-    label.textContent = "Stroke Size";
-    this.strokeInput = document.createElement("input");
-    this.strokeInput.type = "text";
-    this.strokeInput.id = "stroke-value";
-    this.strokeInput.placeholder = "1-50";
-    this.strokeInput.value = this.state.pencilState.strokeValue.toString();
-    this.pencilButton = document.createElement("input");
-    this.pencilButton.type = "button";
-    this.pencilButton.id = "brush-size";
-    this.pencilButton.value = "OK";
-    this.pencilSettings.insertAdjacentElement(insertAt.afterbegin, label);
-    this.pencilSettings.insertAdjacentElement(
-      insertAt.beforeend,
-      this.strokeInput
-    );
-    this.strokeInput.insertAdjacentElement(
-      insertAt.afterend,
-      this.pencilButton
-    );
-
-    // add element to button
-    this.element.insertAdjacentElement(insertAt.afterend, this.pencilSettings);
+    new PencilSettings(this.state, this.canvasContext);
   }
   public render(): void {
     this.configureFormSettings();
   }
-  @bind
-  private changeBrushSize(e: KeyboardEvent): void {
-    console.log("changeBrushSize");
-    e.preventDefault();
-    const inputElement: HTMLInputElement = document.importNode(
-      this.pencilSettings,
-      true
-    ).childNodes[1] as HTMLInputElement;
-    const strokeValue = Number(inputElement.value);
-    if (strokeValue > 50 || strokeValue < 1 || strokeValue == undefined) {
-      alert("Only values 1 through 50 are accepted");
-      return;
-    }
 
-    this.canvasContext.beginPath();
-    this.canvasContext.lineWidth = strokeValue;
-    this.state.pencilState.strokeValue = strokeValue;
-    projectState.publish("changeBrushSize", this.state);
-  }
   @bind
   public startTool(pointerEvent: PointerEvent) {
     const canvasContext = this.canvas.getContext("2d")!;

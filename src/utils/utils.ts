@@ -1,4 +1,3 @@
-import { List, extend } from "lodash";
 import Tool from "../components/Tools/Tool";
 import {
   stateType,
@@ -44,9 +43,13 @@ class State<T> {
     stopDrawing: [],
     startPickingColor: [],
     stopPickingColor: [],
+    updateLightness: [],
+    updateSaturation: [],
   };
   protected subscribers: StateSubscribers = {
     changeBrushSize: [],
+    updateLightness: [],
+    updateSaturation: [],
   };
 }
 const eventMap: {
@@ -63,13 +66,15 @@ const eventMap: {
   activateEyeDropper: ["click"],
   startPickingColor: ["pointerdown"],
   stopPickingColor: ["pointerup"],
+  updateLightness: ["input"],
+  updateSaturation: ["input"],
 };
 export class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;
   private state: stateType = {
     sliderState: {
-      lightSliderValue: 50,
-      satSliderValue: 50,
+      lightSliderValue: 100,
+      satSliderValue: 100,
     },
     pencilState: {
       pencil: true,
@@ -116,7 +121,7 @@ export class ProjectState extends State<Tool> {
   }
   */
   public addEventListener<
-    T extends PointerEvent | MouseEvent | KeyboardEvent | stateType
+    T extends PointerEvent | MouseEvent | KeyboardEvent | stateType | InputEvent
   >(
     eventName: eventTypes,
     callback: (this: HTMLElement, e: T) => any | Listener<stateType>,
