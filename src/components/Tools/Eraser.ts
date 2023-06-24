@@ -5,6 +5,8 @@ import Tool from "./Tool";
 
 export default class Eraser extends Tool {
   private canvas: HTMLCanvasElement = projectState.getCanvas();
+  private eraserInput: HTMLInputElement;
+  private eraserButton: HTMLButtonElement;
   constructor(private state: stateType) {
     super(
       "eraser",
@@ -12,31 +14,79 @@ export default class Eraser extends Tool {
       "button"
     );
     this.element.setAttribute("id", "eraser");
+    this.eraserButton = this.element;
     this.configureFormSettings();
     projectState.addEventListener<PointerEvent>(
-      "activateEraser",
+      "startErasing",
       this.startTool,
-      this.element
+      this.canvas
+    );
+    projectState.addEventListener<PointerEvent>(
+      "erasing",
+      this.implementTool,
+      this.canvas
+    );
+    projectState.addEventListener<PointerEvent>(
+      "stopErasing",
+      this.stopTool,
+      this.canvas
+    );
+    projectState.addEventListener<PointerEvent>(
+      "activateEraser",
+      this.activateTool,
+      this.eraserButton
     );
   }
   private configureFormSettings() {
     const formElement = document.createElement("form");
     const label = document.createElement("label");
-    const rangeInput = document.createElement("input");
+    this.eraserInput = document.createElement("input");
     formElement.setAttribute("id", "eraser-settings");
     label.setAttribute("for", "eraser-value");
     label.textContent = "Eraser Size";
-    rangeInput.type = "range";
-    rangeInput.id = "eraser-value";
-    rangeInput.value = "25";
+    this.eraserInput.type = "range";
+    this.eraserInput.id = "eraser-value";
+    this.eraserInput.value = "25";
 
     formElement.insertAdjacentElement(insertAt.afterbegin, label);
-    formElement.insertAdjacentElement(insertAt.beforeend, rangeInput);
+    formElement.insertAdjacentElement(insertAt.beforeend, this.eraserInput);
     // add element to button
     this.element.insertAdjacentElement(insertAt.afterend, formElement);
   }
   @bind
   public startTool(pointerEvent: PointerEvent): void {
+    if (this.state.eraserState.eraser == true) {
+      console.log("startTool - Eraser");
+      this.state.eraserState.erasing = true;
+    }
+  }
+
+  @bind
+  public stopTool(pointerEvent: PointerEvent): void {
+    console.log("stopTool - Eraser");
+    this.state.eraserState.erasing = false;
+  }
+  @bind
+  public implementTool(e: PointerEvent): void {
+    if (
+      this.state.eraserState.eraser == true &&
+      this.state.eraserState.erasing == true
+    ) {
+      console.log("erasing");
+      const ctx = this.canvas.getContext("2d")!;
+      let x = e.offsetX;
+      let y = e.offsetY;
+      ctx.beginPath();
+      ctx.clearRect(
+        x - 12,
+        y - 12,
+        Number(this.eraserInput.value),
+        Number(this.eraserInput.value)
+      );
+    }
+  }
+  @bind
+  public activateTool(e: MouseEvent): void {
     console.log("startTool - Eraser");
     if (this.state.eraserState.eraser == false) {
       // Update eraser state

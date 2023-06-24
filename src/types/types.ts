@@ -42,7 +42,8 @@ export type eventTypes =
   | "drawing"
   | "activateEraser"
   | "updateLightness"
-  | "updateSaturation";
+  | "updateSaturation"
+  | "erasing";
 
 export type stateSubscriberTypes =
   | "changeBrushSize"
