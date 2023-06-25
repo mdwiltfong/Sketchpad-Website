@@ -14,6 +14,14 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     projectState.subscribeState("changeBrushSize", (data: stateType) => {
       projectState.setState(data);
     });
+    projectState.subscribeState("activateEraser", (data: stateType) => {
+      projectState.setState(data);
+      this.renderTools();
+    });
+    projectState.subscribeState("activatePencil", (data: stateType) => {
+      projectState.setState(data);
+      this.renderTools();
+    });
     this.renderCanvasButtons();
     this.configure();
     this.renderTools();
@@ -37,6 +45,7 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     console.log(this.element);
     this.element.innerHTML = "";
     new Pencil(this.state);
+    new Eraser(this.state);
     this.renderCanvasButtons();
   }
   public renderContent(...tools: Tool[]): void {}

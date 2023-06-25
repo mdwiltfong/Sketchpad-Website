@@ -42,12 +42,16 @@ export type eventTypes =
   | "drawing"
   | "activateEraser"
   | "updateLightness"
-  | "updateSaturation";
+  | "updateSaturation"
+  | "erasing"
+  | "changeEraserSize";
 
 export type stateSubscriberTypes =
   | "changeBrushSize"
   | "updateLightness"
-  | "updateSaturation";
+  | "updateSaturation"
+  | "activateEraser"
+  | "activatePencil";
 
 export type eventListenerType =
   | "pointerdown"

@@ -74,10 +74,5 @@ export default class SlideForm extends Component<
     );
     projectState.publish("updateSaturation", this.state);
   }
-  private extractHSL(hsl: string): number[] {
-    const regex = /\d+/g;
-    const matches = hsl.match(regex);
-    return matches!.map(Number);
-  }
   public renderContent() {}
 }

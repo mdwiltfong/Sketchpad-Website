@@ -1,6 +1,5 @@
 import Tool from "./Tool";
-import { insertAt } from "../BaseComponent";
-import { stateType, eventTypes } from "../../types/types";
+import { stateType } from "../../types/types";
 import { projectState, bind } from "../../utils/utils";
 import * as _ from "lodash";
 import PencilSettings from "../PencilSettings";
@@ -36,11 +35,7 @@ export default class Pencil extends Tool {
       this.stopTool,
       this.canvas
     );
-    projectState.addEventListener<MouseEvent>(
-      "activatePencil",
-      this.activateTool,
-      this.pencilIcon
-    );
+    this.pencilIcon.addEventListener("click", this.activateTool);
   }
   public configurePencil() {
     this.configureFormSettings();
@@ -85,7 +80,7 @@ export default class Pencil extends Tool {
       console.log("activateTool - pencil");
       this.state.pencilState.pencilIconBackground = "white";
       // TODO: Need to think about this some more. Maybe write out a diagram.
-      //projectState.publish("activatePencil", this.state);
+      projectState.publish("activatePencil", this.state);
     }
   }
   @bind

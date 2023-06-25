@@ -2,7 +2,7 @@ import { stateType } from "../types/types";
 import { bind, projectState } from "../utils/utils";
 import Component, { insertAt } from "./BaseComponent";
 
-export default class PencilSettings extends Component<
+export default class EraserSettings extends Component<
   HTMLDivElement,
   HTMLFormElement
 > {
@@ -17,31 +17,25 @@ export default class PencilSettings extends Component<
       this.changeBrushSize,
       this.element
     );
-    this.element.addEventListener("submit", this.changeBrushSize);
   }
   public configure() {
-    this.element.setAttribute("id", "brush-settings");
+    const formElement = document.createElement("form");
     const label = document.createElement("label");
-    label.setAttribute("for", "stroke-value");
-    label.textContent = "Stroke Size";
     const input = document.createElement("input");
-    input.type = "text";
-    input.id = "stroke-value";
-    input.placeholder = "1-50";
-    input.value = this.state.pencilState.strokeValue.toString();
-    const button = document.createElement("input");
-    button.type = "button";
-    button.id = "brush-size";
-    button.value = "OK";
-    this.element.insertAdjacentElement(insertAt.afterbegin, label);
-    this.element.insertAdjacentElement(insertAt.beforeend, input);
-    input.insertAdjacentElement(insertAt.afterend, button);
+    formElement.setAttribute("id", "eraser-settings");
+    label.setAttribute("for", "eraser-value");
+    label.textContent = "Eraser Size";
+    input.type = "range";
+    input.id = "eraser-value";
+    input.value = "25";
 
-    // add element to button
-    this.hostElement.insertAdjacentElement(insertAt.beforeend, this.element);
+    formElement.insertAdjacentElement(insertAt.afterbegin, label);
+    formElement.insertAdjacentElement(insertAt.beforeend, input);
+    const pencilButton = document.getElementById("pencil")!;
+    this.hostElement.insertBefore(formElement, pencilButton);
   }
   @bind
-  private changeBrushSize(e: Event): void {
+  private changeBrushSize(e: KeyboardEvent): void {
     console.log("changeBrushSize");
     e.preventDefault();
     const inputElement: HTMLInputElement = document.importNode(
@@ -57,7 +51,7 @@ export default class PencilSettings extends Component<
     this.canvasContext.beginPath();
     this.canvasContext.lineWidth = strokeValue;
     this.state.pencilState.strokeValue = strokeValue;
-    projectState.publish("changeBrushSize", this.state);
+    //projectState.publish("changeBrushSize", this.state);
   }
   public renderContent() {}
 }

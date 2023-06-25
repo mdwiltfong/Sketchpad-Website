@@ -45,11 +45,15 @@ class State<T> {
     stopPickingColor: [],
     updateLightness: [],
     updateSaturation: [],
+    erasing: [],
+    changeEraserSize: [],
   };
   protected subscribers: StateSubscribers = {
     changeBrushSize: [],
     updateLightness: [],
     updateSaturation: [],
+    activateEraser: [],
+    activatePencil: [],
   };
 }
 const eventMap: {
@@ -61,13 +65,15 @@ const eventMap: {
   activatePencil: ["click"],
   activateEraser: ["click"],
   startErasing: ["pointerdown"],
-  stopErasing: ["pointerup"],
+  stopErasing: ["pointerup", "pointerleave"],
   changeBrushSize: ["submit"],
   activateEyeDropper: ["click"],
   startPickingColor: ["pointerdown"],
   stopPickingColor: ["pointerup"],
   updateLightness: ["input"],
   updateSaturation: ["input"],
+  erasing: ["pointermove"],
+  changeEraserSize: ["input"],
 };
 export class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;
