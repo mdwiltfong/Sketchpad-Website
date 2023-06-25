@@ -7,6 +7,7 @@ export default class Eraser extends Tool {
   private canvas: HTMLCanvasElement = projectState.getCanvas();
   private eraserInput: HTMLInputElement;
   private eraserButton: HTMLButtonElement;
+  private eraserSettings: HTMLFormElement;
   constructor(private state: stateType) {
     super(
       "eraser",
@@ -36,22 +37,30 @@ export default class Eraser extends Tool {
       this.activateTool,
       this.eraserButton
     );
+    projectState.addEventListener<InputEvent>(
+      "changeEraserSize",
+      this.changeEraserSize,
+      this.eraserSettings
+    );
   }
   private configureFormSettings() {
-    const formElement = document.createElement("form");
+    this.eraserSettings = document.createElement("form");
     const label = document.createElement("label");
     this.eraserInput = document.createElement("input");
-    formElement.setAttribute("id", "eraser-settings");
+    this.eraserSettings.setAttribute("id", "eraser-settings");
     label.setAttribute("for", "eraser-value");
     label.textContent = "Eraser Size";
     this.eraserInput.type = "range";
     this.eraserInput.id = "eraser-value";
-    this.eraserInput.value = "25";
+    this.eraserInput.value = this.state.eraserState.eraserValue.toString();
 
-    formElement.insertAdjacentElement(insertAt.afterbegin, label);
-    formElement.insertAdjacentElement(insertAt.beforeend, this.eraserInput);
+    this.eraserSettings.insertAdjacentElement(insertAt.afterbegin, label);
+    this.eraserSettings.insertAdjacentElement(
+      insertAt.beforeend,
+      this.eraserInput
+    );
     // add element to button
-    this.element.insertAdjacentElement(insertAt.afterend, formElement);
+    this.element.insertAdjacentElement(insertAt.afterend, this.eraserSettings);
   }
   @bind
   public startTool(pointerEvent: PointerEvent): void {
@@ -84,6 +93,12 @@ export default class Eraser extends Tool {
         Number(this.eraserInput.value)
       );
     }
+  }
+  @bind
+  public changeEraserSize(e: InputEvent): void {
+    e.preventDefault();
+    console.log("changeEraserSize - Eraser");
+    this.state.eraserState.eraserValue = Number(this.eraserInput.value);
   }
   @bind
   public activateTool(e: MouseEvent): void {

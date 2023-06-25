@@ -46,6 +46,7 @@ class State<T> {
     updateLightness: [],
     updateSaturation: [],
     erasing: [],
+    changeEraserSize: [],
   };
   protected subscribers: StateSubscribers = {
     changeBrushSize: [],
@@ -71,6 +72,7 @@ const eventMap: {
   updateLightness: ["input"],
   updateSaturation: ["input"],
   erasing: ["pointermove"],
+  changeEraserSize: ["input"],
 };
 export class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;

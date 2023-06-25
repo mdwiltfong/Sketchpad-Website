@@ -1,6 +1,5 @@
 import Tool from "./Tool";
-import { insertAt } from "../BaseComponent";
-import { stateType, eventTypes } from "../../types/types";
+import { stateType } from "../../types/types";
 import { projectState, bind } from "../../utils/utils";
 import * as _ from "lodash";
 import PencilSettings from "../PencilSettings";
