@@ -17,6 +17,7 @@ export default class PencilSettings extends Component<
       this.changeBrushSize,
       this.element
     );
+    this.element.addEventListener("submit", this.changeBrushSize);
   }
   public configure() {
     this.element.setAttribute("id", "brush-settings");
@@ -40,7 +41,7 @@ export default class PencilSettings extends Component<
     this.hostElement.insertAdjacentElement(insertAt.beforeend, this.element);
   }
   @bind
-  private changeBrushSize(e: KeyboardEvent): void {
+  private changeBrushSize(e: Event): void {
     console.log("changeBrushSize");
     e.preventDefault();
     const inputElement: HTMLInputElement = document.importNode(
@@ -56,7 +57,7 @@ export default class PencilSettings extends Component<
     this.canvasContext.beginPath();
     this.canvasContext.lineWidth = strokeValue;
     this.state.pencilState.strokeValue = strokeValue;
-    //projectState.publish("changeBrushSize", this.state);
+    projectState.publish("changeBrushSize", this.state);
   }
   public renderContent() {}
 }

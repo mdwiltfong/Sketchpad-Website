@@ -53,6 +53,7 @@ class State<T> {
     updateLightness: [],
     updateSaturation: [],
     activateEraser: [],
+    activatePencil: [],
   };
 }
 const eventMap: {

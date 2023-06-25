@@ -50,7 +50,8 @@ export type stateSubscriberTypes =
   | "changeBrushSize"
   | "updateLightness"
   | "updateSaturation"
-  | "activateEraser";
+  | "activateEraser"
+  | "activatePencil";
 
 export type eventListenerType =
   | "pointerdown"

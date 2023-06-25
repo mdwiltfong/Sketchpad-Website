@@ -14,6 +14,14 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     projectState.subscribeState("changeBrushSize", (data: stateType) => {
       projectState.setState(data);
     });
+    projectState.subscribeState("activateEraser", (data: stateType) => {
+      projectState.setState(data);
+      this.renderTools();
+    });
+    projectState.subscribeState("activatePencil", (data: stateType) => {
+      projectState.setState(data);
+      this.renderTools();
+    });
     this.renderCanvasButtons();
     this.configure();
     this.renderTools();

@@ -32,16 +32,9 @@ export default class Eraser extends Tool {
       this.stopTool,
       this.canvas
     );
-    projectState.addEventListener<PointerEvent>(
-      "activateEraser",
-      this.activateTool,
-      this.eraserButton
-    );
-    projectState.addEventListener<InputEvent>(
-      "changeEraserSize",
-      this.changeEraserSize,
-      this.eraserSettings
-    );
+
+    this.eraserButton.addEventListener("click", this.activateTool);
+    this.eraserSettings.addEventListener("input", this.changeEraserSize);
   }
   private configureFormSettings() {
     this.eraserSettings = document.createElement("form");
@@ -59,6 +52,9 @@ export default class Eraser extends Tool {
       insertAt.beforeend,
       this.eraserInput
     );
+    this.svg.style.background = this.state.eraserState.eraser
+      ? "white"
+      : "transparent";
     // add element to button
     this.element.insertAdjacentElement(insertAt.afterend, this.eraserSettings);
   }
@@ -95,7 +91,7 @@ export default class Eraser extends Tool {
     }
   }
   @bind
-  public changeEraserSize(e: InputEvent): void {
+  public changeEraserSize(e: Event): void {
     e.preventDefault();
     console.log("changeEraserSize - Eraser");
     this.state.eraserState.eraserValue = Number(this.eraserInput.value);
