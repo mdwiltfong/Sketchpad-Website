@@ -89,8 +89,8 @@ export default class Eraser extends Tool {
       ctx.clearRect(
         x - 12,
         y - 12,
-        Number(this.eraserInput.value),
-        Number(this.eraserInput.value)
+        Number(this.state.eraserState.eraserValue),
+        Number(this.state.eraserState.eraserValue)
       );
     }
   }
