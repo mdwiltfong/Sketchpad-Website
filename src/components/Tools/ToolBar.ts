@@ -22,6 +22,10 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
       projectState.setState(data);
       this.renderTools();
     });
+    projectState.subscribeState("activateEyeDropper", (data: stateType) => {
+      projectState.setState(data);
+      this.renderTools();
+    });
     this.renderCanvasButtons();
     this.configure();
     this.renderTools();
@@ -46,8 +50,16 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     this.element.innerHTML = "";
     new Pencil(this.state);
     new Eraser(this.state);
-    new EyeDropper(this.state);
+    this.renderEyeDropper();
+
     this.renderCanvasButtons();
   }
   public renderContent(...tools: Tool[]): void {}
+  private renderEyeDropper(): void {
+    const eyeDropper = document.getElementById("eyedropper");
+    if (eyeDropper) {
+      eyeDropper.parentNode!.removeChild(eyeDropper);
+    }
+    new EyeDropper(this.state);
+  }
 }

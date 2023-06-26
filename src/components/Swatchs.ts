@@ -1,4 +1,4 @@
-import { eventTypes } from "../types/types";
+import { eventTypes, stateType } from "../types/types";
 import { bind, projectState } from "../utils/utils";
 import Component, { insertAt } from "./BaseComponent";
 import SlideForm from "./SlideForm";
@@ -34,6 +34,9 @@ export default class Swatchs extends Component<HTMLDivElement, HTMLDivElement> {
       }
       this.renderContent();
       this.configure();
+    });
+    projectState.subscribeState("updateColor", (data: stateType) => {
+      this.updateCurrentColor(data.currentColor);
     });
     new SlideForm(this.state, this.canvasCtx);
   }

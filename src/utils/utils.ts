@@ -47,6 +47,7 @@ class State<T> {
     updateSaturation: [],
     erasing: [],
     changeEraserSize: [],
+    pickingColor: [],
   };
   protected subscribers: StateSubscribers = {
     changeBrushSize: [],
@@ -54,6 +55,8 @@ class State<T> {
     updateSaturation: [],
     activateEraser: [],
     activatePencil: [],
+    activateEyeDropper: [],
+    updateColor: [],
   };
 }
 const eventMap: {
@@ -74,6 +77,7 @@ const eventMap: {
   updateSaturation: ["input"],
   erasing: ["pointermove"],
   changeEraserSize: ["input"],
+  pickingColor: ["pointerdown"],
 };
 export class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;
@@ -99,6 +103,7 @@ export class ProjectState extends State<Tool> {
       pickingColor: false,
       backgroundColor: "buttonface",
     },
+    currentColor: "transparent",
   };
   private static instance: ProjectState;
 
