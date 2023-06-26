@@ -57,6 +57,7 @@ class State<T> {
     activatePencil: [],
     activateEyeDropper: [],
     updateColor: [],
+    clearCanvas: [],
   };
 }
 const eventMap: {

@@ -1,4 +1,4 @@
-import { projectState } from "../../utils/utils";
+import { bind, projectState } from "../../utils/utils";
 import Component, { insertAt } from "../BaseComponent";
 import Pencil from "./Pencil";
 import EyeDropper from "./EyeDropper";
@@ -9,6 +9,7 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
   private clearCanvasBtn: HTMLButtonElement;
   private saveCanvasBtn: HTMLButtonElement;
   private state = projectState.getState();
+  private canvas = projectState.getCanvas();
   constructor() {
     super("container", insertAt.beforeend, "div");
     projectState.subscribeState("changeBrushSize", (data: stateType) => {
@@ -26,6 +27,10 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
       projectState.setState(data);
       this.renderTools();
     });
+    projectState.subscribeState("clearCanvas", (data: stateType) => {
+      projectState.setState(data);
+      this.renderTools();
+    });
     this.renderCanvasButtons();
     this.configure();
     this.renderTools();
@@ -36,7 +41,7 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     this.clearCanvasBtn.innerText = "Clear Canvas";
     this.clearCanvasBtn.id = "clear";
     this.clearCanvasBtn.type = "button";
-
+    this.clearCanvasBtn.addEventListener("click", this.clearCanvase);
     this.saveCanvasBtn = document.createElement("button");
     this.saveCanvasBtn.innerText = "Save Canvas";
     this.saveCanvasBtn.id = "save";
@@ -61,5 +66,14 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
       eyeDropper.parentNode!.removeChild(eyeDropper);
     }
     new EyeDropper(this.state);
+  }
+  @bind
+  public clearCanvase(): void {
+    const ctx = this.canvas.getContext("2d")!;
+    ctx.clearRect(0, 0, 700, 500);
+    ctx.beginPath();
+    this.state.pencilState.pencil = true;
+    this.state.eraserState.eraser = false;
+    projectState.publish("clearCanvas", this.state);
   }
 }
