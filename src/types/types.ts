@@ -55,7 +55,8 @@ export type stateSubscriberTypes =
   | "activateEraser"
   | "activatePencil"
   | "activateEyeDropper"
-  | "updateColor";
+  | "updateColor"
+  | "clearCanvas";
 
 export type eventListenerType =
   | "pointerdown"
