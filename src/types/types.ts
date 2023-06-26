@@ -27,6 +27,7 @@ export type stateType = {
   pencilState: pencilState;
   eraserState: eraserState;
   eyeDropperState: eyeDropperState;
+  currentColor: string;
 };
 
 export type eventTypes =
@@ -44,14 +45,17 @@ export type eventTypes =
   | "updateLightness"
   | "updateSaturation"
   | "erasing"
-  | "changeEraserSize";
+  | "changeEraserSize"
+  | "pickingColor";
 
 export type stateSubscriberTypes =
   | "changeBrushSize"
   | "updateLightness"
   | "updateSaturation"
   | "activateEraser"
-  | "activatePencil";
+  | "activatePencil"
+  | "activateEyeDropper"
+  | "updateColor";
 
 export type eventListenerType =
   | "pointerdown"
