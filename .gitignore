@@ -1,4 +1,8 @@
 node_modules
 
 package-lock.json
-/docs
+/docs/components
+/docs/types
+/docs/utils
+/docs/*.js
+/docs/*.js.map
