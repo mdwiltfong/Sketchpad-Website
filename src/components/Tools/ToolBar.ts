@@ -1,4 +1,4 @@
-import { bind, projectState } from "../../utils/utils";
+import { SaveFileHandler, bind, projectState } from "../../utils/utils";
 import Component, { insertAt } from "../BaseComponent";
 import Pencil from "./Pencil";
 import EyeDropper from "./EyeDropper";
@@ -45,6 +45,14 @@ export default class ToolBar extends Component<HTMLDivElement, HTMLDivElement> {
     this.saveCanvasBtn = document.createElement("button");
     this.saveCanvasBtn.innerText = "Save Canvas";
     this.saveCanvasBtn.id = "save";
+    this.saveCanvasBtn.addEventListener("click", async () => {
+      try {
+        return SaveFileHandler.saveDrawing(this.canvas);
+      } catch (error) {
+        console.error(error);
+        return;
+      }
+    });
     this.element.setAttribute("id", "toolbar");
     this.element.insertAdjacentElement(insertAt.beforeend, this.clearCanvasBtn);
     this.element.insertAdjacentElement(insertAt.beforeend, this.saveCanvasBtn);

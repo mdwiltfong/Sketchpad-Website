@@ -80,7 +80,7 @@ const eventMap: {
   changeEraserSize: ["input"],
   pickingColor: ["pointerdown"],
 };
-export class ProjectState extends State<Tool> {
+class ProjectState extends State<Tool> {
   private canvasElement: HTMLCanvasElement;
   private state: stateType = {
     sliderState: {
@@ -176,4 +176,32 @@ export class ProjectState extends State<Tool> {
   }
 }
 
+export class SaveFileHandler {
+  private static options: {
+    types: {
+      desciption: string;
+      accept: {
+        "text/plain": string[];
+      };
+    }[];
+  } = {
+    types: [
+      {
+        desciption: "Text File",
+        accept: {
+          "text/plain": [".txt"],
+        },
+      },
+    ],
+  };
+
+  public static saveDrawing(canvas: HTMLCanvasElement): void {
+    canvas.toBlob((blob) => {
+      let link = document.createElement("a"); // Create a download link
+      link.download = "image.png"; // Filename for download
+      link.href = URL.createObjectURL(blob as Blob); // Create a URL for the Blob
+      link.click();
+    }, "image/png");
+  }
+}
 export const projectState = ProjectState.getInstance();
